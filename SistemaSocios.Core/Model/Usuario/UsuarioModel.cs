@@ -1,27 +1,62 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
+using SistemaSocios.Core.Model.Entidade;
+using SistemaSocios.Core.Model.perfilAcesso;
 
 namespace SistemaSocios.Core.Model.Usuario
 {
     public class UsuarioModel
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string idUsuario { get; set; }
-        public string NomeUsuario { get; set; }
-        public string email { get; set; }
-        public EnderecoUsuarioModel Endereco { get; set; }
-        public TelefoneUsuarioModel Telefone { get; set; }
-        public string Profissao { get; set; }
-        public EscolaridadeUsuarioModel Escolaridade { get; set; }
-        public RedeSocialModel RedeSocial { get; set; }
-        public DateTime DataEntrada { get; set; }
-        public DateTime DataIniciacao { get; set; }
-        public DateTime DataUltimaObrigacao { get; set; }
-        public JurosMensalidadeModel AplicaJurosMensalidade { get; set; }
-        public ValorMensalidadeModel ValorMensalidade { get; set; }
 
+        [BsonElement("nomeusuario")]
+        [BsonRequired]
+        public string nomeUsuario { get; set; }
+
+        [BsonElement("email")]
+        [BsonRequired]
+        public string email { get; set; }
+
+        [BsonElement("senha")]
+        public string senha { get; set; }
+
+        [BsonElement("endereco")]
+        public EnderecoUsuarioModel endereco { get; set; }
+
+        [BsonElement("telefone")]
+        public TelefoneUsuarioModel telefone { get; set; }
+
+        [BsonElement("profissao")]
+        public string profissao { get; set; }
+
+        [BsonElement("escolaridade")]
+        public EscolaridadeUsuarioModel escolaridade { get; set; }
+
+        [BsonElement("redesocial")]
+        public RedeSocialModel redesocial { get; set; }
+
+        [BsonElement("dataentrada")]
+        public DateTime dataEntrada { get; set; }
+
+        [BsonElement("datainiciacao")]
+        public DateTime dataIniciacao { get; set; }
+
+        [BsonElement("dataultimaobrigacao")]
+        public DateTime dataUltimaObrigacao { get; set; }
+
+        [BsonElement("aplicajurosmensalidade")]
+        public JurosMensalidadeModel aplicaJurosMensalidade { get; set; }
+
+        [BsonElement("valormensalidade")]
+        public ValorMensalidadeModel valorMensalidade { get; set; }
+
+        [BsonElement("entidade")]
+        public EntidadeModel entidade { get; set; }
+
+        [BsonElement("perfil")]
+        public perfilModel perfilAcesso { get; set; }
 
     }
 }

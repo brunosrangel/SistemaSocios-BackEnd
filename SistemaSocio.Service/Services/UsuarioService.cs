@@ -19,14 +19,14 @@ public class UsuarioService : IUsuarioService
         return await _repository.GetByIdAsync(id);
     }
 
-    public async Task AddUsuario(UsuarioModel usuario)
+    public async Task AddUsuario(UsuarioModel entidade)
     {
-        await _repository.AddAsync(usuario);
+        await _repository.AddAsync(entidade);
     }
 
-    public async Task<bool> UpdateUsuario(string id, UsuarioModel usuario)
+    public async Task<bool> UpdateUsuario(string id, UsuarioModel entidade)
     {
-        return await _repository.UpdateAsync(id, usuario);
+        return await _repository.UpdateAsync(id, entidade);
     }
 
     public async Task<bool> DeleteUsuario(string id)

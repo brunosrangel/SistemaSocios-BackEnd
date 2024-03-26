@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace SistemaSocios.Core.Model.Usuario
 {
     public class TipoEnderecoUsuarioModel
     {
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
         public string IdTipoEndereco { get; set; }
-        public string Descricao { get; set; } = string.Empty;
 
+        [BsonElement("descricao")]
+        public string Descricao { get; set; } = string.Empty;
     }
 }
