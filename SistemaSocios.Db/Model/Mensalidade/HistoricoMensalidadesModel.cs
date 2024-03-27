@@ -4,7 +4,7 @@ using SistemaSocios.Core.Model.Usuario;
 
 namespace SistemaSocios.Core.Model.Mensalidade
 {
-    public class HistoricoMensalidadesModel : DocModel
+    public class HistoricoMensalidadesModel : Document
     {
         public UsuarioModel Usuario { get; set; }
         public int MesReferencia { get; set; }

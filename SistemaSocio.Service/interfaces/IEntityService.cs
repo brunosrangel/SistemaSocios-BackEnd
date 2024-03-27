@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SistemaSocio.Service.interfaces
+﻿namespace SistemaSocio.Service.interfaces
 {
-  
-    public interface IEntityService<TEntity> where TEntity : class
+
+    public interface IEntityService<TEntity> where TEntity : IDocument
     {
-        Task<List<TEntity>> GetAllEntities();
-        Task<TEntity> GetEntityById(string id);
-        Task AddEntity(TEntity entity);
-        Task<bool> UpdateEntity(string id, TEntity entity);
-        Task<bool> DeleteEntity(string id);
+        Task<TEntity> CreateAsync(TEntity entity);
+        Task<TEntity> GetByIdAsync(string id);
+        Task<List<TEntity>> GetAllAsync();
+        Task<TEntity> UpdateAsync(string id, TEntity entity);
+        Task<bool> DeleteAsync(string id);
     }
 
 }

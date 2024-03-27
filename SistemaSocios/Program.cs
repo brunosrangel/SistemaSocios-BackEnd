@@ -1,32 +1,74 @@
-using MongoDB.Driver;
-using SistemaSocios.Core.Model.settings;
+using SistemaSocio.Service.interfaces;
+using SistemaSocio.Service.Services;
+using SistemaSocios.Core.Model.Entidade;
+using SistemaSocios.Core.Model.Usuario;
+using SistemaSocios.Db.Model;
+using SistemaSocios.Db.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configurar o serviço de CORS
 builder.Services.AddCors();
 
-// Carregar o arquivo appsettings.json em uma instância de IConfiguration
+// Configurar a leitura do arquivo appsettings.json com base no ambiente
+var environment = builder.Environment;
 var config = new ConfigurationBuilder()
-    .SetBasePath(Directory.GetCurrentDirectory())
+    .SetBasePath(builder.Environment.ContentRootPath)
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
     .Build();
-// Desserializar o arquivo em um objeto AppSettings
-var appSettings = config.Get<AppSettings>();
-//var connectionString = builder.Configuration.GetConnectionString("MongoDBSettings");
-var mongoClient = new MongoClient(appSettings.MongoDBSettings.ConnectionString);
-var database = mongoClient.GetDatabase(appSettings.MongoDBSettings.DatabaseName);
 
-// Registrar o cliente do MongoDB para injeção de dependência
-builder.Services.AddSingleton<IMongoClient>(mongoClient);
+// Configurar as opções do token
+var tokenOptions = new TokenOptions
+{
+    SecretKey = config["Token:SecretKey"],
+    Issuer = config["Token:Issuer"],
+    Audience = config["Token:Audience"],
+    AccessTokenExpirationMinutes = Convert.ToInt32(config["Token:AccessTokenExpirationMinutes"]),
+    RefreshTokenExpirationMinutes = Convert.ToInt32(config["Token:RefreshTokenExpirationMinutes"])
+};
+builder.Services.AddSingleton(tokenOptions);
 
-// Registrar o banco de dados MongoDB para injeção de dependência
-builder.Services.AddSingleton(database);
+// Registre o serviço de token com a interface
+builder.Services.AddScoped<ITokenService, TokenService>();
 
-// Registrar a interface IRepository e suas implementações necessárias
-builder.Services.AddScoped(typeof(IRepository<>), typeof(MongoRepository<>));
+// Carregar as configurações do MongoDB do arquivo appsettings.json
+var mongoDbSettings = config.GetSection("MongoDBSettings").Get<MongoDbSettings>();
+
+// Registre o serviço de token com a interface
+builder.Services.AddScoped<ITokenService, TokenService>();
+
+// Registrar IMongoDbSettings no contêiner de serviços
+builder.Services.AddSingleton<IMongoDbSettings>(mongoDbSettings);
+
+// Registro de IEntityService<EntidadeModel> e sua implementação EntityService<EntidadeModel>
+// Registro do serviço EntityService<EntidadeModel> e do repositório MongoRepository<EntidadeModel>
+builder.Services.AddScoped<IEntityService<EntidadeModel>, EntityService<EntidadeModel>>();
+builder.Services.AddScoped<IMongoRepository<EntidadeModel>, MongoRepository<EntidadeModel>>();
+builder.Services.AddScoped<IEntityService<UsuarioModel>, EntityService<UsuarioModel>>();
+builder.Services.AddScoped<IMongoRepository<UsuarioModel>, MongoRepository<UsuarioModel>>();
+
+//Classes Customizadas
+builder.Services.AddScoped<IUserService<UsuarioModel>, UserService<UsuarioModel>>();
+builder.Services.AddScoped<IUsuarioMongoRepository<UsuarioModel>, UsuarioMongoRepository<UsuarioModel>>();
+
+
+
+
+
 
 builder.Services.AddControllers();
+
+// Dentro do método de configuração dos serviços da sua aplicação
+builder.Services.AddLogging(builder => builder.AddConsole());
+
+// Ou, se preferir, adicione um logger específico para um tipo de classe
+builder.Services.AddLogging(loggingBuilder =>
+{
+    loggingBuilder.AddConsole();
+    loggingBuilder.AddDebug();
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

@@ -1,4 +1,4 @@
-﻿namespace SistemaSocio.Service
+﻿namespace SistemaSocios.Db.Mysql
 {
     public class Class1
     {

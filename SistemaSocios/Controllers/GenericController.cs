@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaSocio.Service.interfaces;
-using System.Reflection;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Reflection;
 
 namespace SistemaSocios.Webapi.Controllers
 {
@@ -9,7 +9,7 @@ namespace SistemaSocios.Webapi.Controllers
     [ApiController]
     [SwaggerTag("Default")] // Definindo a tag padrão
     public abstract class BaseController<TEntity, TService> : ControllerBase
-        where TEntity : class
+        where TEntity : IDocument
         where TService : IEntityService<TEntity>
     {
         protected readonly TService _service;
@@ -24,14 +24,14 @@ namespace SistemaSocios.Webapi.Controllers
         [HttpGet]
         public virtual async Task<IActionResult> GetAll()
         {
-            var entities = await _service.GetAllEntities();
+            var entities = await _service.GetAllAsync();
             return Ok(entities);
         }
 
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> GetById(string id)
         {
-            var entity = await _service.GetEntityById(id);
+            var entity = await _service.GetByIdAsync(id);
             if (entity == null)
             {
                 return NotFound();
@@ -42,29 +42,29 @@ namespace SistemaSocios.Webapi.Controllers
         [HttpPost]
         public virtual async Task<IActionResult> Add(TEntity entity)
         {
-            await _service.AddEntity(entity);
+            await _service.CreateAsync(entity);
             return CreatedAtAction(nameof(GetById), new { id = GetEntityId(entity) }, entity);
         }
 
         [HttpPut("{id}")]
         public virtual async Task<IActionResult> Update(string id, TEntity entity)
         {
-            var updated = await _service.UpdateEntity(id, entity);
-            if (!updated)
-            {
-                return NotFound();
-            }
+            var updated = await _service.UpdateAsync(id, entity);
+            //if (!updated.Id.ToString())
+            //{
+            //    return NotFound();
+            //}
             return NoContent();
         }
 
         [HttpDelete("{id}")]
         public virtual async Task<IActionResult> Delete(string id)
         {
-            var deleted = await _service.DeleteEntity(id);
-            if (!deleted)
-            {
-                return NotFound();
-            }
+            await _service.DeleteAsync(id);
+            //if (!deleted)
+            //{
+            //    return NotFound();
+            //}
             return NoContent();
         }
 
@@ -101,7 +101,7 @@ namespace SistemaSocios.Webapi.Controllers
         }
 
 
-    // Método auxiliar para obter o ID da entidade
-    protected abstract string GetEntityId(TEntity entity);
+        // Método auxiliar para obter o ID da entidade
+        protected abstract string GetEntityId(TEntity entity);
     }
 }

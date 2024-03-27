@@ -1,15 +1,12 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using SistemaSocios.Db.Model;
 
 namespace SistemaSocios.Core.Model.Usuario
 {
-    public class TipoEnderecoUsuarioModel
+    public class TipoEnderecoUsuarioModel : DocModel
     {
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public string IdTipoEndereco { get; set; }
 
-        [BsonElement("descricao")]
-        public string Descricao { get; set; } = string.Empty;
+         public string Descricao { get; set; } = string.Empty;
     }
 }

@@ -5,12 +5,10 @@ using SistemaSocios.Db.Model;
 namespace SistemaSocios.Core.Model.Usuario
 {
     [BsonCollection("Usuario")]
-    public class EscolaridadeUsuarioModel : DocModel
+    public class TipoEnderecoUsuarioModel : Document
     {
 
-        public string DescricaoEscolaridade { get; set; }
-
-
-        public bool StatusEscolaridade { get; set; }
+        [BsonElement("descricao")]
+        public string Descricao { get; set; } = string.Empty;
     }
 }

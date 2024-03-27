@@ -4,9 +4,10 @@ using SistemaSocios.Db.Model;
 
 namespace SistemaSocios.Core.Model
 {
-    public class ValorMensalidadeModel : DocModel
+    [BsonCollection("Usuario")]
+    public class ValorMensalidadeModel : Document
     {
-  
+        [BsonElement("valormensalidade")]
         public decimal ValorMensalidade { get; set; }
     }
 }

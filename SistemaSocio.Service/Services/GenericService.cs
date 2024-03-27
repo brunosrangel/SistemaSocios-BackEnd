@@ -1,43 +1,59 @@
 ﻿using SistemaSocio.Service.interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SistemaSocio.Service.Services
 {
 
 
-    public class EntityService<TEntity> : IEntityService<TEntity> where TEntity : class
+    public class EntityService<TEntity> : IEntityService<TEntity> where TEntity : IDocument
     {
-        private readonly IRepository<TEntity> _repository;
+        private readonly IMongoRepository<TEntity> _repository;
 
-        public EntityService(IRepository<TEntity> repository)
+        public EntityService(IMongoRepository<TEntity> repository)
         {
             _repository = repository;
         }
 
-        public async Task<List<TEntity>> GetAllEntities()
+        public async Task<TEntity> CreateAsync(TEntity entity)
         {
-            return await _repository.GetAllAsync();
+            await _repository.InsertOneAsync(entity);
+            return entity;
         }
 
-        public async Task<TEntity> GetEntityById(string id)
+        public async Task<TEntity> GetByIdAsync(string id)
         {
             return await _repository.GetByIdAsync(id);
         }
 
-        public async Task AddEntity(TEntity entity)
+        public async Task<List<TEntity>> GetAllAsync()
         {
-            await _repository.AddAsync(entity);
+            return await _repository.GetAllAsync();
         }
 
-        public async Task<bool> UpdateEntity(string id, TEntity entity)
+        public async Task<TEntity> UpdateAsync(string id, TEntity entity)
         {
-            return await _repository.UpdateAsync(id, entity);
+            var existingEntity = await _repository.GetByIdAsync(id);
+            if (existingEntity == null)
+            {
+                // Document not found
+               
+                return default(TEntity);
+            }
+
+            entity.Id = existingEntity.Id; // Ensure the ID is preserved
+            await _repository.ReplaceOneAsync(entity);
+            return entity;
         }
 
-        public async Task<bool> DeleteEntity(string id)
+        public async Task<bool> DeleteAsync(string id)
         {
-            return await _repository.DeleteAsync(id);
+            var existingEntity = await _repository.GetByIdAsync(id);
+            if (existingEntity == null)
+            {
+                // Document not found
+                return false;
+            }
+
+            return await _repository.DeleteByIdAsync(id);
         }
     }
 
