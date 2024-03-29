@@ -1,14 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SistemaSocios.Db.Mysql.Configuration;
-using SistemaSocios.Db.Mysql.settings;
 
 public class DbMySqlContext : DbContext
 {
     public DbMySqlContext(DbContextOptions<DbMySqlContext> options) : base(options)
     {
-        
+
     }
 
     public DbSet<EntidadeModel> Entidades { get; set; }

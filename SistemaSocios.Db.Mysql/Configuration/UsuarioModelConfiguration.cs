@@ -22,7 +22,7 @@ public class UsuarioModelConfiguration : IEntityTypeConfiguration<UsuarioModel>
 
         builder.Property(u => u.profissao);
         builder.HasOne(u => u.escolaridade)
-                .WithOne()      
+                .WithOne()
                 .HasForeignKey<EscolaridadeUsuarioModel>(p => p.Id);
 
         builder.HasMany(u => u.redesocial)

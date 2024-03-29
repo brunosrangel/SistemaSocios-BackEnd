@@ -68,8 +68,21 @@ namespace SistemaSocios.WebApi.MySql.Controllers
         {
             try
             {
-                await _service.CreateAsync(entity);
-                return CreatedAtAction(nameof(GetById), new { id = GetEntityId(entity) }, entity);
+
+                if (typeof(TEntity) == typeof(UsuarioModel))
+                {
+                    var usuario = entity as UsuarioModel;
+                    usuario.senha = new ControleSenha.ControleSenha().HashPassword(usuario.senha);
+                    await _service.CreateAsync(entity);
+                    return CreatedAtAction(nameof(GetById), new { id = GetEntityId(entity) });
+
+                }
+                else
+                {
+                    await _service.CreateAsync(entity);
+                    return CreatedAtAction(nameof(GetById), new { id = GetEntityId(entity) }, entity);
+                }
+
             }
             catch (Exception ex)
             {

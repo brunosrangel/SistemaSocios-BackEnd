@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using SistemaSocios.Db.Mysql.settings;
 using Xis.Generic.DataAccess.Repository;
 using Xis.Generic.DataAccess.Service;
@@ -43,7 +42,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 
 builder.Services.AddDbContext<DbMySqlContext>(options =>
     options.UseMySql(_mySqlOptions.ConnectionString, ServerVersion.AutoDetect(_mySqlOptions.ConnectionString),
-                    b=>b.MigrationsAssembly("SistemaSocios.WebApi.MySql") ));
+                    b => b.MigrationsAssembly("SistemaSocios.WebApi.MySql")));
 
 builder.Services.AddScoped<DbContext>(provider => provider.GetService<DbMySqlContext>());
 

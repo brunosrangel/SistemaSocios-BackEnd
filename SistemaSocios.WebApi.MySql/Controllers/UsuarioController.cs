@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Linq.Expressions;
-using System.Xml;
 using Xis.Generic.DataAccess.Service;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+
 
 namespace SistemaSocios.WebApi.MySql.Controllers
 {
@@ -24,32 +23,44 @@ namespace SistemaSocios.WebApi.MySql.Controllers
         {
             var usr = new UsuarioModel { email = user };
             Expression<Func<UsuarioModel, bool>> FiltrarUsuario = entity => entity.email == user;
-            Expression<Func<UsuarioModel, bool>> FiltrarUsuarioSenha = entity => entity.email == user && entity.senha == pass;
-            var VerificaUsario = await _service.QuerySingleAsync(FiltrarUsuario);
-            var verificaSenha = await _service.QuerySingleAsync(FiltrarUsuarioSenha);
+            try
+            {
 
-            var ValidaEmail = FiltrarUsuario.Compile()(new UsuarioModel { email = user });
-            if (!ValidaEmail)
-            {
-                return BadRequest("Email Não cadastrado");
-            }
-            else
-            {
-                bool resultadoEmailSenha = FiltrarUsuarioSenha.Compile()(new UsuarioModel { email = user, senha = pass });
-                if (!resultadoEmailSenha) { return BadRequest("Senha Invalida"); }
+                var verificaSenha = await _service.QuerySingleAsync(FiltrarUsuario);
+                var verificaSenha2 = await _service.QueryAsync(FiltrarUsuario);
+                var ValidaEmail = FiltrarUsuario.Compile()(new UsuarioModel { email = user });
+                if (!ValidaEmail)
+                {
+                    return BadRequest("Email Não cadastrado");
+                }
                 else
                 {
-                    // Construa um dicionário com as informações que deseja incluir no token
-                    var claims = new Dictionary<string, string>
+                    bool resultadoEmailSenha = FiltrarUsuario.Compile()
+                        (new UsuarioModel { senha = pass });
+
+                    bool validaHash = new ControleSenha.ControleSenha().VerifyPassword(pass, verificaSenha.senha);
+                    if (!validaHash) { return BadRequest("Senha Invalida"); }
+                    else
+                    {
+                        // Construa um dicionário com as informações que deseja incluir no token
+                        var claims = new Dictionary<string, string>
                     {
                         { "userId", verificaSenha.Id.ToString() },
                         { "username", verificaSenha.email }
                     };
-                    var token = _tokenService.GenerateToken(claims);
-                    return Ok(new { accessToken = token });
-                }
+                        var token = _tokenService.GenerateToken(claims);
+                        return Ok(new { accessToken = token });
+                    }
 
+                }
             }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+
 
 
 
