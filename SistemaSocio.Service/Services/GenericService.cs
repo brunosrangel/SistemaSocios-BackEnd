@@ -1,10 +1,11 @@
-﻿using SistemaSocio.Service.interfaces;
+﻿using MongoDB.Bson;
+using SistemaSocio.Service.interfaces;
 
 namespace SistemaSocio.Service.Services
 {
 
 
-    public class EntityService<TEntity> : IEntityService<TEntity> where TEntity : IDocument
+    public class EntityService<TEntity> : IEntityService<TEntity> where TEntity : IDocument<ObjectId>
     {
         private readonly IMongoRepository<TEntity> _repository;
 

@@ -1,13 +1,9 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using SistemaSocios.Core.Model.Entidade;
+﻿using SistemaSocios.Core.Model.Entidade;
 using SistemaSocios.Core.Model.perfilAcesso;
-using SistemaSocios.Db.Model;
-using SistemaSocios.Db.Servicos;
 
 namespace SistemaSocios.Core.Model.Usuario
 {
-    
+
     public class UsuarioModel : DocModel
     {
 

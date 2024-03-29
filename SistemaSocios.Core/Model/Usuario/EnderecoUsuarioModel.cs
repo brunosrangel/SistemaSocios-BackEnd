@@ -1,7 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using SistemaSocios.Core.Model.Usuario;
-using SistemaSocios.Db.Model;
+﻿using SistemaSocios.Core.Model.Usuario;
 
 namespace SistemaSocios.Core.Model
 {

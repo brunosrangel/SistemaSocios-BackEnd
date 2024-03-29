@@ -1,8 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using MongoDB.Bson;
-using MongoDB.Driver;
-using SistemaSocios.Db.Model;
-using System.Linq.Expressions;
+﻿using MongoDB.Driver;
+using SistemaSocios.Db.MongoDb;
 
 public class MongoRepository<TDocument> : IMongoRepository<TDocument>
     where TDocument : IDocument

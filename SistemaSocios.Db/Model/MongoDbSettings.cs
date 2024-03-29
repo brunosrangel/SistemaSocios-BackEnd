@@ -1,9 +1,9 @@
-﻿namespace SistemaSocios.Db.Model
+﻿namespace SistemaSocios.Db.MongoDb
 {
     public interface IMongoDbSettings
     {
         string DatabaseName { get; set; }
-        string ConnectionString { get; set; }  
+        string ConnectionString { get; set; }
         string CollectionName { get; set; }
     }
 

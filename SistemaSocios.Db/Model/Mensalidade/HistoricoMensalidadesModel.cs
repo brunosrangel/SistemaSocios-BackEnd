@@ -1,15 +1,10 @@
-﻿
+﻿using SistemaSocios.Db.MongoDb.Usuario;
 
-using SistemaSocios.Core.Model.Usuario;
-
-namespace SistemaSocios.Core.Model.Mensalidade
+public class HistoricoMensalidadesMongoDb : Document
 {
-    public class HistoricoMensalidadesModel : Document
-    {
-        public UsuarioModel Usuario { get; set; }
-        public int MesReferencia { get; set; }
-        public int AnoReferencia { get; set; }
-        public StatusMensalidadeModel statusMensalidade { get; set; }
+    public UsuarioModelMongoDb Usuario { get; set; }
+    public int MesReferencia { get; set; }
+    public int AnoReferencia { get; set; }
+    public StatusMensalidadeMongoDb statusMensalidade { get; set; }
 
-    }
 }

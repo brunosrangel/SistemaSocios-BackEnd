@@ -1,25 +1,20 @@
-﻿using MongoDB.Bson;
+﻿
 using MongoDB.Bson.Serialization.Attributes;
-using SistemaSocios.Db.Model;
-using System.Text.Json.Serialization;
+using SistemaSocios.Db.MongoDb;
 
+[BsonCollection("Entidade")]
 
-namespace SistemaSocios.Core.Model.Entidade
+public class EntidadeModelMongoDb : Document
 {
-    [BsonCollection("Entidade")]
 
-    public class EntidadeModel : Document
-    {
+    [BsonElement("descricaoentidade")]
+    [BsonRequired]
+    public string DescricaoEntidade { get; set; }
 
-        [BsonElement("descricaoentidade")]
-        [BsonRequired]
-        public string DescricaoEntidade { get; set; }
+    [BsonElement("statusentidade")]
+    [BsonRequired]
+    public bool statusEntidade { get; set; }
 
-        [BsonElement("statusentidade")]
-        [BsonRequired]
-        public bool statusEntidade { get; set; }
+}
 
-    }
-
-    }
 

@@ -1,4 +1,4 @@
-﻿namespace SistemaSocios.Db.Model
+﻿namespace SistemaSocios.Db.MongoDb
 {
     [AttributeUsage(AttributeTargets.Class, Inherited = false)]
     public class BsonCollectionAttribute : Attribute

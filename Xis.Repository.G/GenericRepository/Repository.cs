@@ -1,8 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Xis.Repository.G.Interfaces;
 
-namespace Xis.Repository.G
+namespace Xis.Repository.G.GenericRepository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {

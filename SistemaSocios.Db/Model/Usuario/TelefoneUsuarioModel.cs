@@ -1,11 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using SistemaSocios.Db.Model;
 
-namespace SistemaSocios.Core.Model.Usuario
+namespace SistemaSocios.Db.MongoDb.Usuario
 {
     [BsonCollection("Usuario")]
-    public class TelefoneUsuarioModel : Document
+    public class TelefoneUsuarioMongoDb : Document
     {
         [BsonElement("dddtelefoneusuario")]
         public string DddTelefoneUsuario { get; set; }
@@ -14,6 +13,6 @@ namespace SistemaSocios.Core.Model.Usuario
         public string NumeroTelefoneUsuario { get; set; }
 
         [BsonElement("tipotelefone")]
-        public TipoTelefoneUsuarioModel TipoTelefone { get; set; }
+        public TipoTelefoneUsuarioMongoDb TipoTelefone { get; set; }
     }
 }

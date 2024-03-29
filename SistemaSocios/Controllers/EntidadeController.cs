@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SistemaSocio.Service.interfaces;
-using SistemaSocios.Core.Model.Entidade;
+﻿using SistemaSocio.Service.interfaces;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace SistemaSocios.Webapi.Controllers
@@ -12,7 +10,7 @@ namespace SistemaSocios.Webapi.Controllers
         {
         }
 
-    
+
 
         // Implementação do método abstrato para obter o ID da entidade
         protected override string GetEntityId(EntidadeModel entity)

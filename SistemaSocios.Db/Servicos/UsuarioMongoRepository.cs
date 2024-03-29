@@ -1,11 +1,11 @@
 ﻿using MongoDB.Driver;
-using SistemaSocios.Db.Model;
+using SistemaSocios.Db.MongoDb;
 
 
 namespace SistemaSocios.Db.Servicos
 {
-    public class UsuarioMongoRepository<TEntity> : IUsuarioMongoRepository<TEntity> where TEntity 
-        : IDocument, IUsuarioModel
+    public class UsuarioMongoRepository<TEntity> : IUsuarioMongoRepository<TEntity> where TEntity
+        : IDocument, IUsuarioMongoDb
 
     {
         private readonly IMongoCollection<TEntity> _collection;

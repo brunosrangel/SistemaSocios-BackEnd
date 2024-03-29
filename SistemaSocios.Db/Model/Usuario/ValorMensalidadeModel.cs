@@ -1,11 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using SistemaSocios.Db.Model;
 
-namespace SistemaSocios.Core.Model
+namespace SistemaSocios.Db.MongoDb
 {
     [BsonCollection("Usuario")]
-    public class ValorMensalidadeModel : Document
+    public class ValorMensalidadeMongoDb : Document
     {
         [BsonElement("valormensalidade")]
         public decimal ValorMensalidade { get; set; }

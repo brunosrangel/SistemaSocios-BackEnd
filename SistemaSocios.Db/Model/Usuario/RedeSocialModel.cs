@@ -1,11 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using SistemaSocios.Db.Model;
 
-namespace SistemaSocios.Core.Model.Usuario
+namespace SistemaSocios.Db.MongoDb.Usuario
 {
     [BsonCollection("Usuario")]
-    public class RedeSocialModel : Document
+    public class RedeSocialMongoDb : Document
     {
 
         [BsonElement("descricaoredesocialusuario")]

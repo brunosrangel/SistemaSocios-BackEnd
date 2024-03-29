@@ -1,6 +1,4 @@
-﻿
-
-using SistemaSocios.Core.Model.Usuario;
+﻿using SistemaSocios.Core.Model.Usuario;
 
 namespace SistemaSocios.Core.Model.Mensalidade
 {
@@ -10,6 +8,5 @@ namespace SistemaSocios.Core.Model.Mensalidade
         public int MesReferencia { get; set; }
         public int AnoReferencia { get; set; }
         public StatusMensalidadeModel statusMensalidade { get; set; }
-
     }
 }

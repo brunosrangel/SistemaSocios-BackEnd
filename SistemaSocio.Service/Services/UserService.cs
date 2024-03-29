@@ -1,11 +1,4 @@
-﻿using SistemaSocio.Service.interfaces;
-using SistemaSocios.Core.Model.Usuario;
-using SistemaSocios.Db.Servicos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SistemaSocios.Core.Model.Usuario;
 
 namespace SistemaSocio.Service.Services
 {

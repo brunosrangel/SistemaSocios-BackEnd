@@ -1,12 +1,11 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using SistemaSocios.Core.Model.Usuario;
-using SistemaSocios.Db.Model;
+using SistemaSocios.Db.MongoDb.Usuario;
 
-namespace SistemaSocios.Core.Model
+namespace SistemaSocios.Db.MongoDb
 {
     [BsonCollection("Usuario")]
-    public class EnderecoUsuarioModel : Document
+    public class EnderecoUsuarioMongoDb : Document
     {
         [BsonElement("endereco")]
         public string endereco { get; set; }
@@ -18,7 +17,7 @@ namespace SistemaSocios.Core.Model
         public string estado { get; set; }
 
         [BsonElement("tipoendereco")]
-        public TipoEnderecoUsuarioModel TipoEndereco { get; set; }
+        public TipoEnderecoUsuarioMongoDb TipoEndereco { get; set; }
 
         [BsonElement("cep")]
         public string Cep { get; set; }

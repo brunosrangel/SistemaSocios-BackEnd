@@ -1,5 +1,4 @@
-﻿using System.Linq.Expressions;
-
+﻿
 public interface IMongoRepository<TDocument> where TDocument : IDocument
 {
     Task<TDocument> GetByIdAsync(string id);

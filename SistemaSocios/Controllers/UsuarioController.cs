@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SistemaSocio.Service.interfaces;
 using SistemaSocio.Service.Services;
-using SistemaSocios.Core.Model.Usuario;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Security.Claims;
-using ZstdSharp.Unsafe;
 
 namespace SistemaSocios.Webapi.Controllers
 {
@@ -17,12 +14,12 @@ namespace SistemaSocios.Webapi.Controllers
         {
             _UService = UService;
             _tokenService = tokenService;
-                
+
         }
         [HttpGet("login")]
         public async Task<OkObjectResult> Login(string user, string pass)
         {
-           var data = await _UService.EfetuaLogin(user, pass);
+            var data = await _UService.EfetuaLogin(user, pass);
             // Construa um dicionário com as informações que deseja incluir no token
             var claims = new Dictionary<string, string>
         {

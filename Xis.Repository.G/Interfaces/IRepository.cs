@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Xis.Repository.G
+namespace Xis.Repository.G.Interfaces
 {
     public interface IRepository<TEntity> where TEntity : class
     {

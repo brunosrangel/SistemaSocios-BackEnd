@@ -21,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\SistemaSocio.Service\SistemaSocio.ServiceMongo.csproj" />
     <ProjectReference Include="..\SistemaSocios.Core\SistemaSocios.Core.csproj" />
+    <ProjectReference Include="..\SistemaSocios.Db.Mysql\SistemaSocios.Db.Mysql.csproj" />
+    <ProjectReference Include="..\SistemaSocios.Db\SistemaSocios.Db.MongoDb.csproj" />
   </ItemGroup>
 
   <ItemGroup>

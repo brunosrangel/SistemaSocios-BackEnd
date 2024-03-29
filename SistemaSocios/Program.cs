@@ -1,8 +1,8 @@
 using SistemaSocio.Service.interfaces;
 using SistemaSocio.Service.Services;
-using SistemaSocios.Core.Model.Entidade;
-using SistemaSocios.Core.Model.Usuario;
-using SistemaSocios.Db.Model;
+using SistemaSocios.Db.MongoDb;
+using SistemaSocios.Db.MongoDb.Usuario;
+using SistemaSocios.Db.Mysql.settings;
 using SistemaSocios.Db.Servicos;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +29,12 @@ var tokenOptions = new TokenOptions
 };
 builder.Services.AddSingleton(tokenOptions);
 
+var _mySqlOptions = new MySqlOptions
+{
+    ConnectionString = config["MySqlConfigs:ConnectionString"]
+};
+builder.Services.AddSingleton(_mySqlOptions);
+
 // Registre o serviço de token com a interface
 builder.Services.AddScoped<ITokenService, TokenService>();
 
@@ -42,15 +48,15 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddSingleton<IMongoDbSettings>(mongoDbSettings);
 
 // Registro de IEntityService<EntidadeModel> e sua implementação EntityService<EntidadeModel>
-// Registro do serviço EntityService<EntidadeModel> e do repositório MongoRepository<EntidadeModel>
-builder.Services.AddScoped<IEntityService<EntidadeModel>, EntityService<EntidadeModel>>();
-builder.Services.AddScoped<IMongoRepository<EntidadeModel>, MongoRepository<EntidadeModel>>();
-builder.Services.AddScoped<IEntityService<UsuarioModel>, EntityService<UsuarioModel>>();
-builder.Services.AddScoped<IMongoRepository<UsuarioModel>, MongoRepository<UsuarioModel>>();
+//// Registro do serviço EntityService<EntidadeModel> e do repositório MongoRepository<EntidadeModel>
+//builder.Services.AddScoped<IEntityService<EntidadeModelMongoDb>, EntityService<EntidadeModelMongoDb>>();
+//builder.Services.AddScoped<IMongoRepository<EntidadeModelMongoDb>, MongoRepository<EntidadeModelMongoDb>>();
+//builder.Services.AddScoped<IEntityService<UsuarioModelMongoDb>, EntityService<UsuarioModelMongoDb>>();
+//builder.Services.AddScoped<IMongoRepository<UsuarioModelMongoDb>, MongoRepository<UsuarioModelMongoDb>>();
 
-//Classes Customizadas
-builder.Services.AddScoped<IUserService<UsuarioModel>, UserService<UsuarioModel>>();
-builder.Services.AddScoped<IUsuarioMongoRepository<UsuarioModel>, UsuarioMongoRepository<UsuarioModel>>();
+////Classes Customizadas
+//builder.Services.AddScoped<IUserService<UsuarioModelMongoDb>, UserService<UsuarioModelMongoDb>>();
+//builder.Services.AddScoped<IUsuarioMongoRepository<UsuarioModelMongoDb>, UsuarioMongoRepository<UsuarioModelMongoDb>>();
 
 
 

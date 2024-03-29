@@ -1,9 +1,7 @@
-﻿using SistemaSocios.Db.Model;
-
-namespace SistemaSocios.Core.Model.Usuario
+﻿namespace SistemaSocios.Db.MongoDb.Usuario
 {
     [BsonCollection("Usuario")]
-    public class TipoTelefoneUsuarioModel : Document
+    public class TipoTelefoneUsuarioMongoDb : Document
     {
         public string Descricao { get; set; } = string.Empty;
 

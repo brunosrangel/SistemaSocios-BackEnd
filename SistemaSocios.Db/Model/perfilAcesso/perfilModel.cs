@@ -1,11 +1,10 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using SistemaSocios.Db.Model;
 
-namespace SistemaSocios.Core.Model.perfilAcesso
+namespace SistemaSocios.Db.MongoDb.perfilAcesso
 {
     [BsonCollection("PerfilAcesso")]
-    public class perfilModel
+    public class perfilMongoDb
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]

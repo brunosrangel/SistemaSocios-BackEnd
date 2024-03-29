@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SistemaSocios.Core\SistemaSocios.Core.csproj" />
-    <ProjectReference Include="..\SistemaSocios.Db\SistemaSocios.Db.csproj" />
+    <ProjectReference Include="..\SistemaSocios.Db\SistemaSocios.Db.MongoDb.csproj" />
   </ItemGroup>
 
 </Project>
