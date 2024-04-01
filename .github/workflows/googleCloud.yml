@@ -1,0 +1,50 @@
+name: Deploy to Google Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '3.1' # ou a versão que você está usando
+
+      - name: Build the project
+        run: dotnet build -c Release
+
+      - name: Publish the project
+        run: dotnet publish -c Release -o ./publish
+
+      - name: Configure Docker
+        uses: azure/docker-login@v1
+        with:
+          login-server: gcr.io
+          username: _json_key
+          password: ${{ secrets.GOOGLE_AUTH_TOKEN }}
+
+      - name: Build Docker image
+        run: |
+          docker build -t gcr.io/your-project-id/your-image-name ./publish
+
+      - name: Push Docker image to Container Registry
+        run: |
+          docker push gcr.io/your-project-id/your-image-name
+
+      - name: Deploy to Google Cloud Run
+        run: |
+          gcloud run deploy your-service-name \
+            --image gcr.io/your-project-id/your-image-name \
+            --platform managed \
+            --region your-region \
+            --allow-unauthenticated
+        env:
+          CLOUDSDK_CORE_PROJECT: ${{ secrets.GCP_PROJECT_ID }}
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
