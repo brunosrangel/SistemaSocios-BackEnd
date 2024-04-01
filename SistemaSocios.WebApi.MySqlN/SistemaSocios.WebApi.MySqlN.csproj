@@ -21,8 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\generic.ValidaToken\Xis.ValidaToken.csproj" />
     <ProjectReference Include="..\SistemaSocios.Db.Mysql\SistemaSocios.Db.Mysql.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Xis.ValidaToken">
+      <HintPath>..\..\generic.ValidaToken\bin\Release\net7.0\Xis.ValidaToken.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
