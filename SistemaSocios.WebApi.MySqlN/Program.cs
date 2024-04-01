@@ -46,39 +46,6 @@ builder.Services.AddDbContext<DbMySqlContext>(options =>
 
 builder.Services.AddScoped<DbContext>(provider => provider.GetService<DbMySqlContext>());
 
-
-//builder.Services.AddScoped<IGenericService<EntidadeModel>, GenericService<EntidadeModel>>();
-//builder.Services.AddScoped<IGenericService<UsuarioModel>, GenericService<UsuarioModel>>();
-//builder.Services.AddScoped<IGenericService<EnderecoUsuarioModel>, GenericService<EnderecoUsuarioModel>>();
-//builder.Services.AddScoped<IGenericService<TipoEnderecoUsuarioModel>, GenericService<TipoEnderecoUsuarioModel>>();
-//builder.Services.AddScoped<IGenericService<EscolaridadeUsuarioModel>, GenericService<EscolaridadeUsuarioModel>>();
-//builder.Services.AddScoped<IGenericService<JurosMensalidadeModel>, GenericService<JurosMensalidadeModel>>();
-//builder.Services.AddScoped<IGenericService<RedeSocialModel>, GenericService<RedeSocialModel>>();
-//builder.Services.AddScoped<IGenericService<TelefoneUsuarioModel>, GenericService<TelefoneUsuarioModel>>();
-//builder.Services.AddScoped<IGenericService<TipoTelefoneUsuarioModel>, GenericService<TipoTelefoneUsuarioModel>>();
-//builder.Services.AddScoped<IGenericService<ValorMensalidadeModel>, GenericService<ValorMensalidadeModel>>();
-
-//builder.Services.AddScoped<IGenericService<HistoricoMensalidadesModel>, GenericService<HistoricoMensalidadesModel>>();
-//builder.Services.AddScoped<IGenericService<StatusMensalidadeModel>, GenericService<StatusMensalidadeModel>>();
-
-//builder.Services.AddScoped<IGenericService<perfilModel>, GenericService<perfilModel>>();
-
-//builder.Services.AddScoped<IGenericRepository<perfilModel>, GenericRepository<perfilModel>>();
-
-//builder.Services.AddScoped<IGenericRepository<EntidadeModel>, GenericRepository<EntidadeModel>>();
-//builder.Services.AddScoped<IGenericRepository<UsuarioModel>, GenericRepository<UsuarioModel>>();
-//builder.Services.AddScoped<IGenericRepository<EnderecoUsuarioModel>, GenericRepository<EnderecoUsuarioModel>>();
-//builder.Services.AddScoped<IGenericRepository<TipoEnderecoUsuarioModel>, GenericRepository<TipoEnderecoUsuarioModel>>();
-//builder.Services.AddScoped<IGenericRepository<EscolaridadeUsuarioModel>, GenericRepository<EscolaridadeUsuarioModel>>();
-//builder.Services.AddScoped<IGenericRepository<JurosMensalidadeModel>, GenericRepository<JurosMensalidadeModel>>();
-//builder.Services.AddScoped<IGenericRepository<RedeSocialModel>, GenericRepository<RedeSocialModel>>();
-//builder.Services.AddScoped<IGenericRepository<TelefoneUsuarioModel>, GenericRepository<TelefoneUsuarioModel>>();
-//builder.Services.AddScoped<IGenericRepository<TipoTelefoneUsuarioModel>, GenericRepository<TipoTelefoneUsuarioModel>>();
-//builder.Services.AddScoped<IGenericRepository<ValorMensalidadeModel>, GenericRepository<ValorMensalidadeModel>>();
-
-//builder.Services.AddScoped<IGenericRepository<HistoricoMensalidadesModel>, GenericRepository<HistoricoMensalidadesModel>>();
-//builder.Services.AddScoped<IGenericRepository<StatusMensalidadeModel>, GenericRepository<StatusMensalidadeModel>>();
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -90,7 +57,7 @@ var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
-{
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
 //}
