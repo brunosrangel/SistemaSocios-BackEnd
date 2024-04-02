@@ -1,4 +1,6 @@
 cd SistemaSocios.WebApi.MySqlN/ && docker build \
     -t gcr.io/sistemasocios/github.com/brunosrangel/sistemasocios-backend:$COMMIT_SHA \
     -f Dockerfile \
-    .
+    . \
+    --build-arg BUILD_CONFIGURATION=Release \
+    --build-arg PROJECT_FILE=SistemaSocios.WebApi.MySqlN/SistemaSocios.WebApi.MySqlN.csproj
