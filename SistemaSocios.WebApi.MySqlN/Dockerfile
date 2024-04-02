@@ -9,6 +9,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["SistemaSocios.WebApi.MySqlN/SistemaSocios.WebApi.MySqlN.csproj", "SistemaSocios.WebApi.MySqlN/"]
+COPY ["SistemaSocios.Db.Mysql/SistemaSocios.Db.Mysql.csproj", "SistemaSocios.Db.Mysql/"]
 RUN dotnet restore "./SistemaSocios.WebApi.MySqlN/SistemaSocios.WebApi.MySqlN.csproj"
 COPY . .
 WORKDIR "/src/SistemaSocios.WebApi.MySqlN"
