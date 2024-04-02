@@ -1,0 +1,4 @@
+cd SistemaSocios.WebApi.MySqlN/ && docker build \
+    -t gcr.io/sistemasocios/github.com/brunosrangel/sistemasocios-backend:$COMMIT_SHA \
+    -f Dockerfile \
+    .
