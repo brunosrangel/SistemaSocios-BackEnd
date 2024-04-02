@@ -16,7 +16,7 @@ FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "SistemaSocios.WebApi.MySqlN.dll"]
+FROM build AS publish
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION -o /app/publish --no-restore
+
