@@ -1,20 +1,24 @@
-# Cloud builder for the dotnet builder.
-
 steps:
-- name: 'gcr.io/cloud-builders/docker'
-  args:
-  - 'build'
-  - '--tag=gcr.io/$PROJECT_ID/dotnet'
-  - '.'
-
-# Build the test projects
-#- name: 'gcr.io/$PROJECT_ID/dotnet'
-#  args: ['build']
- # dir: 'examples/TestApp-2.0'
-
-- name: 'gcr.io/$PROJECT_ID/dotnet'
-  args: ['build']
-  dir: 'SistemaSocios.WebApi.MySqlN'
-
+  - name: 'mcr.microsoft.com/dotnet/sdk:7.0'
+    entrypoint: 'dotnet publish -c Release -o out --no-restore'
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - build
+      - '-t'
+      - '$_AR_HOSTNAME/$PROJECT_ID/cloud-run-source-deploy/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+      - '.'
 images:
-- 'gcr.io/$PROJECT_ID/dotnet'
+  - '$_AR_HOSTNAME/$PROJECT_ID/cloud-run-source-deploy/$REPO_NAME/$_SERVICE_NAME:$COMMIT_SHA'
+options:
+  substitutionOption: ALLOW_LOOSE
+  logging: CLOUD_LOGGING_ONLY
+substitutions:
+  _AR_HOSTNAME: southamerica-east1-docker.pkg.dev
+  _SERVICE_NAME: sistemasocios-backend
+  REPO_NAME: sistemasocios-backend
+  _TRIGGER_ID: efffd8d0-4dcf-4622-8082-507bc767c032
+  _DEPLOY_REGION: southamerica-east1
+tags:
+  - gcp-cloud-build-deploy-cloud-run
+  - gcp-cloud-build-deploy-cloud-run-managed
+  - sistemasocios-backend
