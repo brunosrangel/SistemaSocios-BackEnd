@@ -10,9 +10,8 @@ COPY ["SistemaSocios.WebApi.MySqlN/SistemaSocios.WebApi.MySqlN.csproj", "Sistema
 RUN dotnet restore "./SistemaSocios.WebApi.MySqlN/SistemaSocios.WebApi.MySqlN.csproj"
 COPY . .
 WORKDIR "/src/SistemaSocios.WebApi.MySqlN"
-RUN dotnet build "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN /usr/bin/dotnet build "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION -o /app/publish --no-restore
-
+RUN /usr/bin/dotnet publish "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION -o /app/publish --no-restore
