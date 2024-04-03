@@ -14,8 +14,5 @@ RUN dotnet build "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION 
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "./SistemaSocios.WebApi.MySqlN.csproj" -c $BUILD_CONFIGURATION -o /app/publish --no-restore
+
