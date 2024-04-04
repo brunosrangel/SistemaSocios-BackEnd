@@ -1,4 +1,8 @@
-﻿public class UsuarioModel : DocModel
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("Usuario")]
+
+public class UsuarioModel : DocModel
 {
     public string nomeUsuario { get; set; }
     public string email { get; set; }

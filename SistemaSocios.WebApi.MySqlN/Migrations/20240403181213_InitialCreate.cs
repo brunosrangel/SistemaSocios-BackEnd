@@ -1,8 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SistemaSocios.WebApi.MySql.Migrations
+namespace SistemaSocios.WebApi.MySqlN.Migrations
 {
     /// <inheritdoc />
     public partial class InitialCreate : Migration
@@ -28,7 +29,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TipoEnderecoUsuarioModel",
+                name: "TipoEnderecoUsuario",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -37,12 +38,12 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoEnderecoUsuarioModel", x => x.Id);
+                    table.PrimaryKey("PK_TipoEnderecoUsuario", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TipoTelefoneUsuarioModel",
+                name: "TipoTelefoneUsuario",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -51,7 +52,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TipoTelefoneUsuarioModel", x => x.Id);
+                    table.PrimaryKey("PK_TipoTelefoneUsuario", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -87,7 +88,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "EnderecoUsuarioModel",
+                name: "EnderecoUsuario",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -104,15 +105,15 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EnderecoUsuarioModel", x => x.Id);
+                    table.PrimaryKey("PK_EnderecoUsuario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EnderecoUsuarioModel_TipoEnderecoUsuarioModel_TipoEnderecoId",
+                        name: "FK_EnderecoUsuario_TipoEnderecoUsuario_TipoEnderecoId",
                         column: x => x.TipoEnderecoId,
-                        principalTable: "TipoEnderecoUsuarioModel",
+                        principalTable: "TipoEnderecoUsuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EnderecoUsuarioModel_Usuario_Id",
+                        name: "FK_EnderecoUsuario_Usuario_Id",
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
@@ -142,7 +143,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "EscolaridadeUsuarioModel",
+                name: "EscolaridadeUsuario",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -152,9 +153,9 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EscolaridadeUsuarioModel", x => x.Id);
+                    table.PrimaryKey("PK_EscolaridadeUsuario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_EscolaridadeUsuarioModel_Usuario_Id",
+                        name: "FK_EscolaridadeUsuario_Usuario_Id",
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
@@ -191,7 +192,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "JurosMensalidadeModel",
+                name: "JurosMensalidade",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -201,9 +202,9 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_JurosMensalidadeModel", x => x.Id);
+                    table.PrimaryKey("PK_JurosMensalidade", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_JurosMensalidadeModel_Usuario_Id",
+                        name: "FK_JurosMensalidade_Usuario_Id",
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
@@ -233,7 +234,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "RedeSocialModel",
+                name: "RedeSocial",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -247,9 +248,9 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RedeSocialModel", x => x.Id);
+                    table.PrimaryKey("PK_RedeSocial", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_RedeSocialModel_Usuario_Id",
+                        name: "FK_RedeSocial_Usuario_Id",
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
@@ -258,7 +259,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "TelefoneUsuarioModel",
+                name: "TelefoneUsuario",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -270,15 +271,15 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TelefoneUsuarioModel", x => x.Id);
+                    table.PrimaryKey("PK_TelefoneUsuario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TelefoneUsuarioModel_TipoTelefoneUsuarioModel_TipoTelefoneId",
+                        name: "FK_TelefoneUsuario_TipoTelefoneUsuario_TipoTelefoneId",
                         column: x => x.TipoTelefoneId,
-                        principalTable: "TipoTelefoneUsuarioModel",
+                        principalTable: "TipoTelefoneUsuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TelefoneUsuarioModel_Usuario_Id",
+                        name: "FK_TelefoneUsuario_Usuario_Id",
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
@@ -287,7 +288,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "ValorMensalidadeModel",
+                name: "ValorMensalidade",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
@@ -297,9 +298,9 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ValorMensalidadeModel", x => x.Id);
+                    table.PrimaryKey("PK_ValorMensalidade", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ValorMensalidadeModel_Usuario_Id",
+                        name: "FK_ValorMensalidade_Usuario_Id",
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
@@ -308,8 +309,8 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EnderecoUsuarioModel_TipoEnderecoId",
-                table: "EnderecoUsuarioModel",
+                name: "IX_EnderecoUsuario_TipoEnderecoId",
+                table: "EnderecoUsuario",
                 column: "TipoEnderecoId");
 
             migrationBuilder.CreateIndex(
@@ -323,8 +324,8 @@ namespace SistemaSocios.WebApi.MySql.Migrations
                 column: "UsuarioID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TelefoneUsuarioModel_TipoTelefoneId",
-                table: "TelefoneUsuarioModel",
+                name: "IX_TelefoneUsuario_TipoTelefoneId",
+                table: "TelefoneUsuario",
                 column: "TipoTelefoneId");
         }
 
@@ -332,40 +333,40 @@ namespace SistemaSocios.WebApi.MySql.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "EnderecoUsuarioModel");
+                name: "EnderecoUsuario");
 
             migrationBuilder.DropTable(
                 name: "Entidades");
 
             migrationBuilder.DropTable(
-                name: "EscolaridadeUsuarioModel");
+                name: "EscolaridadeUsuario");
 
             migrationBuilder.DropTable(
                 name: "HistoricoMensalidades");
 
             migrationBuilder.DropTable(
-                name: "JurosMensalidadeModel");
+                name: "JurosMensalidade");
 
             migrationBuilder.DropTable(
                 name: "Perfis");
 
             migrationBuilder.DropTable(
-                name: "RedeSocialModel");
+                name: "RedeSocial");
 
             migrationBuilder.DropTable(
-                name: "TelefoneUsuarioModel");
+                name: "TelefoneUsuario");
 
             migrationBuilder.DropTable(
-                name: "ValorMensalidadeModel");
+                name: "ValorMensalidade");
 
             migrationBuilder.DropTable(
-                name: "TipoEnderecoUsuarioModel");
+                name: "TipoEnderecoUsuario");
 
             migrationBuilder.DropTable(
                 name: "StatusMensalidadeModel");
 
             migrationBuilder.DropTable(
-                name: "TipoTelefoneUsuarioModel");
+                name: "TipoTelefoneUsuario");
 
             migrationBuilder.DropTable(
                 name: "Usuario");

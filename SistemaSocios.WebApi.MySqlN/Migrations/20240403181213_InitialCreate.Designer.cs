@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace SistemaSocios.WebApi.MySql.Migrations
+namespace SistemaSocios.WebApi.MySqlN.Migrations
 {
     [DbContext(typeof(DbMySqlContext))]
-    [Migration("20240329161903_InitialCreate")]
+    [Migration("20240403181213_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -52,7 +52,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
 
                     b.HasIndex("TipoEnderecoId");
 
-                    b.ToTable("EnderecoUsuarioModel");
+                    b.ToTable("EnderecoUsuario");
                 });
 
             modelBuilder.Entity("EntidadeModel", b =>
@@ -86,7 +86,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EscolaridadeUsuarioModel");
+                    b.ToTable("EscolaridadeUsuario");
                 });
 
             modelBuilder.Entity("HistoricoMensalidadesModel", b =>
@@ -132,7 +132,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("JurosMensalidadeModel");
+                    b.ToTable("JurosMensalidade");
                 });
 
             modelBuilder.Entity("RedeSocialModel", b =>
@@ -157,7 +157,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("RedeSocialModel");
+                    b.ToTable("RedeSocial");
                 });
 
             modelBuilder.Entity("StatusMensalidadeModel", b =>
@@ -195,7 +195,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
 
                     b.HasIndex("TipoTelefoneId");
 
-                    b.ToTable("TelefoneUsuarioModel");
+                    b.ToTable("TelefoneUsuario");
                 });
 
             modelBuilder.Entity("TipoEnderecoUsuarioModel", b =>
@@ -210,7 +210,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoEnderecoUsuarioModel");
+                    b.ToTable("TipoEnderecoUsuario");
                 });
 
             modelBuilder.Entity("TipoTelefoneUsuarioModel", b =>
@@ -225,7 +225,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("TipoTelefoneUsuarioModel");
+                    b.ToTable("TipoTelefoneUsuario");
                 });
 
             modelBuilder.Entity("UsuarioModel", b =>
@@ -304,7 +304,7 @@ namespace SistemaSocios.WebApi.MySql.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ValorMensalidadeModel");
+                    b.ToTable("ValorMensalidade");
                 });
 
             modelBuilder.Entity("perfilModel", b =>

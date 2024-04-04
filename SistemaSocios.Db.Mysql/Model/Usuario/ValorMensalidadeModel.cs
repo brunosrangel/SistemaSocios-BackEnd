@@ -1,4 +1,8 @@
-﻿public class ValorMensalidadeModel : DocModel
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("ValorMensalidade")]
+
+public class ValorMensalidadeModel : DocModel
 {
 
     public decimal ValorMensalidade { get; set; }

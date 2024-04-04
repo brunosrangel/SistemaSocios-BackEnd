@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SistemaSocios.WebApi.MySqlN.model;
 using Swashbuckle.AspNetCore.Annotations;
 using System.Reflection;
 using Xis.Generic.DataAccess.Service;
@@ -36,31 +37,61 @@ namespace SistemaSocios.WebApi.MySql.Controllers
             try
             {
                 var entities = await _service.GetAllAsync();
-                return Ok(entities);
+                return Ok(new ApiResponse<object>
+                {
+                    Data = entities,
+                    Success = true,
+                    StatusCode = System.Net.HttpStatusCode.OK,
+                });
+                //return Ok(entities);
             }
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return StatusCode(500, new ApiResponse<object>
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                    StatusCode = System.Net.HttpStatusCode.BadRequest
+                });
             }
 
         }
 
         [HttpGet("{id}")]
-        public virtual async Task<IActionResult> GetById(string id)
+        public virtual async Task<IActionResult> GetById(Guid id)
         {
             try
             {
                 var entity = await _service.GetByIdAsync(id);
                 if (entity == null)
                 {
-                    return NotFound();
+                    return StatusCode(500, new ApiResponse<object>
+                    {
+                        Success = false,
+                        ErrorMessage = "Recurso não encontrado",
+                        StatusCode = System.Net.HttpStatusCode.NotFound
+                    });
+                    
                 }
-                return Ok(entity);
+
+                return Ok(new ApiResponse<object>
+                {
+                    Data = entity,
+                    Success = true,
+                    StatusCode = System.Net.HttpStatusCode.OK,
+                });
+              
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+
+                return StatusCode(500, new ApiResponse<object>
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                    StatusCode = System.Net.HttpStatusCode.BadRequest
+                });
             }
 
         }
@@ -76,20 +107,37 @@ namespace SistemaSocios.WebApi.MySql.Controllers
                     var usuario = entity as UsuarioModel;
                     usuario.senha = _tokenService.HashPassword(usuario.senha);
                     await _service.CreateAsync(entity);
-                    return CreatedAtAction(nameof(GetById), new { id = GetEntityId(entity) });
+                    return Ok(new ApiResponse<object>
+                    {
+                        Data = entity,
+                        Success = true,
+                        StatusCode = System.Net.HttpStatusCode.OK,
+                        });
+                    
 
                 }
                 else
                 {
                     await _service.CreateAsync(entity);
-                    return CreatedAtAction(nameof(GetById), new { id = GetEntityId(entity) }, entity);
+                    return Ok(new ApiResponse<object>
+                    {
+                        Data = entity,
+                        Success = true,
+                        StatusCode = System.Net.HttpStatusCode.OK,
+                    });
+                   
                 }
 
             }
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return StatusCode(500, new ApiResponse<object>
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                    StatusCode = System.Net.HttpStatusCode.BadRequest
+                });
             }
 
 
@@ -97,34 +145,46 @@ namespace SistemaSocios.WebApi.MySql.Controllers
         }
 
         [HttpPut("{id}")]
-        public virtual async Task<IActionResult> Update(string id, TEntity entity)
+        public virtual async Task<IActionResult> Update(Guid id, TEntity entity)
         {
             try
             {
                 await _service.UpdateAsync(entity);
-                return NoContent();
+                return Ok(new ApiResponse<object>
+                {
+                    Data = entity,
+                    Success = true,
+                    StatusCode = System.Net.HttpStatusCode.NoContent,
+                });
+                
             }
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return StatusCode(500, new ApiResponse<object> { Success = false, ErrorMessage = ex.Message, StatusCode = System.Net.HttpStatusCode.BadRequest });
             }
         }
 
         [HttpDelete("{id}")]
-        public virtual async Task<IActionResult> Delete(string id)
+        public virtual async Task<IActionResult> Delete(Guid id)
         {
 
             try
             {
                 await _service.DeleteAsync(id);
+                return Ok(new ApiResponse<object>
+                {
+                    Data = id,
+                    Success = true,
+                    StatusCode = System.Net.HttpStatusCode.NoContent,
+                });
 
-                return NoContent();
+                
             }
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return StatusCode(500, new ApiResponse<object> { Success = false, ErrorMessage = ex.Message, StatusCode = System.Net.HttpStatusCode.BadRequest });
             }
         }
 

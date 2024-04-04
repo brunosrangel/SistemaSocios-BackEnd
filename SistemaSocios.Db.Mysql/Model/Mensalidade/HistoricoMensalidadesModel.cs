@@ -1,4 +1,7 @@
-﻿public class HistoricoMensalidadesModel : DocModel
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("HistoricoMensalidades")]
+public class HistoricoMensalidadesModel : DocModel
 {
     public Guid UsuarioID { get; set; } // Chave estrangeira para UsuarioModel
     public UsuarioModel Usuario { get; set; }

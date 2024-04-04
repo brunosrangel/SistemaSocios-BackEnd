@@ -1,4 +1,7 @@
-﻿public class EnderecoUsuarioModel : DocModel
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("EnderecoUsuario")]
+public class EnderecoUsuarioModel : DocModel
 {
     public string endereco { get; set; }
     public string cidade { get; set; }

@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SistemaSocios.WebApi.MySqlN.model;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq.Expressions;
 using Xis.Generic.DataAccess.Service;
 
@@ -12,45 +14,61 @@ namespace SistemaSocios.WebApi.MySql.Controllers
         private readonly IGenericService<UsuarioModel> _genericService;
         private readonly ITokenService _tokenService;
         protected readonly ILogger<UsuarioModel> _loger;
-        public UsuarioController(ITokenService tokenService, ILogger<UsuarioModel> loger, 
+        public UsuarioController(ITokenService tokenService, ILogger<UsuarioModel> loger,
                                 IGenericService<UsuarioModel> genericService) : base(genericService, loger, tokenService)
         {
             _genericService = genericService;
             _tokenService = tokenService;
             _loger = loger;
         }
-        [HttpGet("login")]
-        public async Task<IActionResult> Login(string user, string pass)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel login)
         {
-            var usr = new UsuarioModel { email = user };
-            Expression<Func<UsuarioModel, bool>> FiltrarUsuario = entity => entity.email == user;
+            var usr = new UsuarioModel { email = login.login };
+            Expression<Func<UsuarioModel, bool>> FiltrarUsuario = entity => entity.email == login.login;
             try
             {
 
                 var verificaSenha = await _service.QuerySingleAsync(FiltrarUsuario);
                 var verificaSenha2 = await _service.QueryAsync(FiltrarUsuario);
-                var ValidaEmail = FiltrarUsuario.Compile()(new UsuarioModel { email = user });
-                if (!ValidaEmail)
+                if (verificaSenha == null)
                 {
-                    return BadRequest("Email Não cadastrado");
+                    return Ok(new ApiResponse<object>
+                    {
+                        Success = false,
+                        ErrorMessage = "Email não cadastrado",
+                        StatusCode = System.Net.HttpStatusCode.BadRequest
+                    });
                 }
                 else
                 {
-                    bool resultadoEmailSenha = FiltrarUsuario.Compile()
-                        (new UsuarioModel { senha = pass });
-
-                    bool validaHash = _tokenService.VerifyPassword(pass, verificaSenha.senha);
-                    if (!validaHash) { return BadRequest("Senha Invalida"); }
+                    bool validaHash = _tokenService.VerifyPassword(login.password, _tokenService.HashPassword(login.password));
+                    if (!validaHash)
+                    {
+                        return Ok(new ApiResponse<object>
+                        {
+                            Success = false,
+                            ErrorMessage = "Senha Invalida",
+                            StatusCode = System.Net.HttpStatusCode.BadRequest
+                        });
+                    }
                     else
                     {
                         // Construa um dicionário com as informações que deseja incluir no token
                         var claims = new Dictionary<string, string>
                     {
                         { "userId", verificaSenha.Id.ToString() },
-                        { "username", verificaSenha.email }
+                        { "login", verificaSenha.email },
+                        {"nomeUsuario", verificaSenha.nomeUsuario},
+
                     };
                         var token = _tokenService.GenerateToken(claims);
-                        return Ok(new { accessToken = token });
+                        return Ok(new ApiResponse<object>
+                        {
+                            Data = token,
+                            Success = true,
+                            StatusCode = System.Net.HttpStatusCode.OK,
+                        });
                     }
 
                 }
@@ -58,7 +76,12 @@ namespace SistemaSocios.WebApi.MySql.Controllers
             catch (Exception ex)
             {
 
-                return BadRequest(ex.Message);
+                return Ok(new ApiResponse<object>
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                    StatusCode = System.Net.HttpStatusCode.BadRequest
+                });
             }
 
 

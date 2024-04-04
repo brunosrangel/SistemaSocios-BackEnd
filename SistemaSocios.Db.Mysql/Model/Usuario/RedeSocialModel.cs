@@ -1,4 +1,7 @@
-﻿public class RedeSocialModel : DocModel
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+[Table("RedeSocial")]
+public class RedeSocialModel : DocModel
 {
     public string DescricaoRedeSocialUsuario { get; set; }
     public string Descricao { get; set; }

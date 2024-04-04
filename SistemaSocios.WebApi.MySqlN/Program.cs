@@ -13,6 +13,7 @@ var config = new ConfigurationBuilder()
 // Configurar o serviço de CORS
 builder.Services.AddCors();
 
+
 // Configurar as opções do token
 var tokenOptions = new TokenOptions
 {
@@ -42,7 +43,7 @@ builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepositor
 
 builder.Services.AddDbContext<DbMySqlContext>(options =>
     options.UseMySql(_mySqlOptions.ConnectionString, ServerVersion.AutoDetect(_mySqlOptions.ConnectionString),
-                    b => b.MigrationsAssembly("SistemaSocios.WebApi.MySql")));
+                    b => b.MigrationsAssembly("SistemaSocios.WebApi.MySqlN")));
 
 builder.Services.AddScoped<DbContext>(provider => provider.GetService<DbMySqlContext>());
 
@@ -58,7 +59,10 @@ var app = builder.Build();
     app.UseSwagger();
     app.UseSwaggerUI();
 
-
+app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
