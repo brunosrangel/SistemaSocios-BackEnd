@@ -10,22 +10,19 @@ public class HistoricoMensalidadesModelConfiguration : IEntityTypeConfiguration<
 
         // Define a chave primária
         builder.HasKey(h => h.Id);
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
 
         // Configuração da chave estrangeira para UsuarioModel
-        builder.HasOne(h => h.Usuario)
+        builder.HasOne<UsuarioModel>()
             .WithMany()
             .HasForeignKey(h => h.UsuarioID)
             .OnDelete(DeleteBehavior.Restrict); // Defina o comportamento de exclusão, se necessário
 
-        // Configuração da chave estrangeira para StatusMensalidadeModel
-        builder.HasOne(h => h.statusMensalidade)
-            .WithMany()
-            .HasForeignKey(h => h.StatusMensalidadeId)
-            .OnDelete(DeleteBehavior.Restrict); // Defina o comportamento de exclusão, se necessário
+        builder.Property(p => p.StatusMensalidadeId);
+        builder.Property(p => p.MesReferencia);
+        builder.Property(p => p.AnoReferencia);
+ 
 
-        // Configuração das propriedades MesReferencia e AnoReferencia
-        builder.Property(h => h.MesReferencia);
-        builder.Property(h => h.AnoReferencia);
     }
 }
 
@@ -38,8 +35,9 @@ public class StatusMensalidadeModelConfiguration : IEntityTypeConfiguration<Stat
 
         // Define a chave primária
         builder.HasKey(s => s.Id);
-
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
         // Configuração da propriedade DescricaoStatus
         builder.Property(s => s.DescricaoStatus);
+        builder.Property(u => u.status).HasDefaultValue(true);
     }
 }

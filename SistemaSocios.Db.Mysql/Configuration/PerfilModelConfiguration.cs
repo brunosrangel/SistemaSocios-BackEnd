@@ -10,9 +10,10 @@ public class PerfilModelConfiguration : IEntityTypeConfiguration<perfilModel>
 
         // Define a chave primária
         builder.HasKey(p => p.Id);
-
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
         // Configuração das propriedades DescricaoPerfil e StatusPerfil
         builder.Property(p => p.DescricaoPerfil).IsRequired();
-        builder.Property(p => p.StatusPerfil).IsRequired();
+ 
+
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SistemaSocios.WebApi.MySqlN.Migrations
 {
     [DbContext(typeof(DbMySqlContext))]
-    partial class DbMySqlContextModelSnapshot : ModelSnapshot
+    [Migration("20240405140421_xis005")]
+    partial class xis005
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -36,9 +39,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("EnderecoUsuarioModelId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("Estado")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -53,8 +53,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EnderecoUsuarioModelId");
 
                     b.HasIndex("TipoEnderecoUsuarioId");
 
@@ -110,9 +108,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     b.Property<int>("AnoReferencia")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("HistoricoMensalidadesModelId")
-                        .HasColumnType("char(36)");
-
                     b.Property<int>("MesReferencia")
                         .HasColumnType("int");
 
@@ -126,8 +121,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("HistoricoMensalidadesModelId");
 
                     b.HasIndex("UsuarioID");
 
@@ -143,9 +136,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     b.Property<DateTime?>("DataVigenciaJuros")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid?>("JurosMensalidadeModelId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid>("UsuarioID")
                         .HasColumnType("char(36)");
 
@@ -159,10 +149,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("JurosMensalidadeModelId");
-
-                    b.HasIndex("UsuarioID");
 
                     b.ToTable("JurosMensalidade");
                 });
@@ -181,9 +167,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("RedeSocialModelId")
-                        .HasColumnType("char(36)");
-
                     b.Property<string>("UrlRedeSocial")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -196,34 +179,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("RedeSocialModelId");
-
-                    b.HasIndex("UsuarioID");
-
                     b.ToTable("RedeSocial");
-                });
-
-            modelBuilder.Entity("StatusMensalidadeModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("DescricaoStatus")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid?>("HistoricoMensalidadesModelId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<bool?>("status")
-                        .HasColumnType("tinyint(1)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("HistoricoMensalidadesModelId");
-
-                    b.ToTable("StatusMensalidade");
                 });
 
             modelBuilder.Entity("TelefoneUsuarioModel", b =>
@@ -240,9 +196,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid?>("TelefoneUsuarioModelId")
-                        .HasColumnType("char(36)");
-
                     b.Property<Guid>("TipoTelefoneUsuarioId")
                         .HasColumnType("char(36)");
 
@@ -254,11 +207,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TelefoneUsuarioModelId");
-
                     b.HasIndex("TipoTelefoneUsuarioId");
-
-                    b.HasIndex("UsuarioID");
 
                     b.ToTable("TelefoneUsuario");
                 });
@@ -365,12 +314,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EntidadeId");
-
-                    b.HasIndex("EscolaridadeId");
-
-                    b.HasIndex("PerfilId");
-
                     b.ToTable("Usuario", (string)null);
                 });
 
@@ -380,14 +323,11 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("UsuarioID")
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("ValorMensalidade")
                         .HasColumnType("decimal(65,30)");
-
-                    b.Property<Guid?>("ValorMensalidadeModelId")
-                        .HasColumnType("char(36)");
 
                     b.Property<DateTime>("VigenciaMensalidade")
                         .HasColumnType("datetime(6)");
@@ -400,9 +340,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UsuarioID");
-
-                    b.HasIndex("ValorMensalidadeModelId");
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("ValorMensalidade");
                 });
@@ -427,15 +365,12 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
             modelBuilder.Entity("EnderecoUsuarioModel", b =>
                 {
-                    b.HasOne("EnderecoUsuarioModel", null)
-                        .WithMany("Enderecos")
-                        .HasForeignKey("EnderecoUsuarioModelId");
-
                     b.HasOne("TipoEnderecoUsuarioModel", "TipoEndereco")
-                        .WithMany()
+                        .WithMany("Enderecos")
                         .HasForeignKey("TipoEnderecoUsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_EnderecoUsuario_TipoEnderecoUsuario_TipoEnderecoId");
 
                     b.HasOne("UsuarioModel", "Usuario")
                         .WithMany("Enderecos")
@@ -448,167 +383,120 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     b.Navigation("Usuario");
                 });
 
+            modelBuilder.Entity("EntidadeModel", b =>
+                {
+                    b.HasOne("UsuarioModel", null)
+                        .WithOne("Entidade")
+                        .HasForeignKey("EntidadeModel", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("EscolaridadeUsuarioModel", b =>
+                {
+                    b.HasOne("UsuarioModel", null)
+                        .WithOne("Escolaridade")
+                        .HasForeignKey("EscolaridadeUsuarioModel", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HistoricoMensalidadesModel", b =>
                 {
-                    b.HasOne("HistoricoMensalidadesModel", null)
-                        .WithMany("HistoricosMensalidades")
-                        .HasForeignKey("HistoricoMensalidadesModelId");
-
-                    b.HasOne("UsuarioModel", "Usuario")
-                        .WithMany("HistoricosMensalidades")
-                        .HasForeignKey("UsuarioID")
+                    b.HasOne("UsuarioModel", null)
+                        .WithMany("HistoricoMensalidades")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Usuario");
+                    b.HasOne("UsuarioModel", null)
+                        .WithMany()
+                        .HasForeignKey("UsuarioID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("JurosMensalidadeModel", b =>
                 {
-                    b.HasOne("JurosMensalidadeModel", null)
-                        .WithMany("JurosMensalidadesModel")
-                        .HasForeignKey("JurosMensalidadeModelId");
-
-                    b.HasOne("UsuarioModel", "UsuarioModel")
-                        .WithMany("JurosMensalidades")
-                        .HasForeignKey("UsuarioID")
+                    b.HasOne("UsuarioModel", null)
+                        .WithMany("AplicaJurosMensalidade")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("UsuarioModel");
                 });
 
             modelBuilder.Entity("RedeSocialModel", b =>
                 {
-                    b.HasOne("RedeSocialModel", null)
+                    b.HasOne("UsuarioModel", null)
                         .WithMany("RedesSociais")
-                        .HasForeignKey("RedeSocialModelId");
-
-                    b.HasOne("UsuarioModel", "UsuarioModel")
-                        .WithMany("RedesSociais")
-                        .HasForeignKey("UsuarioID")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("UsuarioModel");
-                });
-
-            modelBuilder.Entity("StatusMensalidadeModel", b =>
-                {
-                    b.HasOne("HistoricoMensalidadesModel", null)
-                        .WithMany("StatusMensalidades")
-                        .HasForeignKey("HistoricoMensalidadesModelId");
                 });
 
             modelBuilder.Entity("TelefoneUsuarioModel", b =>
                 {
-                    b.HasOne("TelefoneUsuarioModel", null)
-                        .WithMany("Telefones")
-                        .HasForeignKey("TelefoneUsuarioModelId");
-
                     b.HasOne("TipoTelefoneUsuarioModel", "TipoTelefone")
                         .WithMany()
                         .HasForeignKey("TipoTelefoneUsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UsuarioModel", "Usuario")
+                    b.HasOne("UsuarioModel", null)
                         .WithMany("Telefones")
-                        .HasForeignKey("UsuarioID")
+                        .HasForeignKey("TipoTelefoneUsuarioId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TipoTelefone");
+                });
+
+            modelBuilder.Entity("ValorMensalidadeModel", b =>
+                {
+                    b.HasOne("UsuarioModel", "Usuario")
+                        .WithMany("ValorMensalidades")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("UsuarioModel", b =>
+            modelBuilder.Entity("perfilModel", b =>
                 {
-                    b.HasOne("EntidadeModel", "Entidade")
-                        .WithMany()
-                        .HasForeignKey("EntidadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("EscolaridadeUsuarioModel", "Escolaridade")
-                        .WithMany()
-                        .HasForeignKey("EscolaridadeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("perfilModel", "Perfil")
-                        .WithMany()
-                        .HasForeignKey("PerfilId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Entidade");
-
-                    b.Navigation("Escolaridade");
-
-                    b.Navigation("Perfil");
-                });
-
-            modelBuilder.Entity("ValorMensalidadeModel", b =>
-                {
-                    b.HasOne("UsuarioModel", "UsuarioModel")
-                        .WithMany("ValorMensalidades")
-                        .HasForeignKey("UsuarioID")
+                    b.HasOne("UsuarioModel", null)
+                        .WithOne("PerfilAcesso")
+                        .HasForeignKey("perfilModel", "Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("ValorMensalidadeModel", null)
-                        .WithMany("ValorMensalidades")
-                        .HasForeignKey("ValorMensalidadeModelId");
-
-                    b.Navigation("UsuarioModel");
                 });
 
-            modelBuilder.Entity("EnderecoUsuarioModel", b =>
+            modelBuilder.Entity("TipoEnderecoUsuarioModel", b =>
                 {
                     b.Navigation("Enderecos");
-                });
-
-            modelBuilder.Entity("HistoricoMensalidadesModel", b =>
-                {
-                    b.Navigation("HistoricosMensalidades");
-
-                    b.Navigation("StatusMensalidades");
-                });
-
-            modelBuilder.Entity("JurosMensalidadeModel", b =>
-                {
-                    b.Navigation("JurosMensalidadesModel");
-                });
-
-            modelBuilder.Entity("RedeSocialModel", b =>
-                {
-                    b.Navigation("RedesSociais");
-                });
-
-            modelBuilder.Entity("TelefoneUsuarioModel", b =>
-                {
-                    b.Navigation("Telefones");
                 });
 
             modelBuilder.Entity("UsuarioModel", b =>
                 {
+                    b.Navigation("AplicaJurosMensalidade");
+
                     b.Navigation("Enderecos");
 
-                    b.Navigation("HistoricosMensalidades");
+                    b.Navigation("Entidade")
+                        .IsRequired();
 
-                    b.Navigation("JurosMensalidades");
+                    b.Navigation("Escolaridade")
+                        .IsRequired();
+
+                    b.Navigation("HistoricoMensalidades");
+
+                    b.Navigation("PerfilAcesso")
+                        .IsRequired();
 
                     b.Navigation("RedesSociais");
 
                     b.Navigation("Telefones");
 
-                    b.Navigation("ValorMensalidades");
-                });
-
-            modelBuilder.Entity("ValorMensalidadeModel", b =>
-                {
                     b.Navigation("ValorMensalidades");
                 });
 #pragma warning restore 612, 618

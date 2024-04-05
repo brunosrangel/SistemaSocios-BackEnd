@@ -24,8 +24,8 @@ namespace SistemaSocios.WebApi.MySql.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginModel login)
         {
-            var usr = new UsuarioModel { email = login.login };
-            Expression<Func<UsuarioModel, bool>> FiltrarUsuario = entity => entity.email == login.login;
+            var usr = new UsuarioModel { Email = login.login };
+            Expression<Func<UsuarioModel, bool>> FiltrarUsuario = entity => entity.Email == login.login;
             try
             {
 
@@ -58,8 +58,8 @@ namespace SistemaSocios.WebApi.MySql.Controllers
                         var claims = new Dictionary<string, string>
                     {
                         { "userId", verificaSenha.Id.ToString() },
-                        { "login", verificaSenha.email },
-                        {"nomeUsuario", verificaSenha.nomeUsuario},
+                        { "login", verificaSenha.Email },
+                        {"nomeUsuario", verificaSenha.NomeUsuario},
 
                     };
                         var token = _tokenService.GenerateToken(claims);

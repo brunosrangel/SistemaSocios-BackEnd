@@ -3,5 +3,5 @@
 [Table("TipoEnderecoUsuario")]
 public class TipoEnderecoUsuarioModel : DocModel
 {
-    public string Descricao { get; set; } 
-        }
+    public string Descricao { get; set; }
+}

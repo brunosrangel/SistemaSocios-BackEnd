@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -9,9 +10,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SistemaSocios.WebApi.MySqlN.Migrations
 {
     [DbContext(typeof(DbMySqlContext))]
-    partial class DbMySqlContextModelSnapshot : ModelSnapshot
+    [Migration("20240405181925_xis009")]
+    partial class xis009
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -432,10 +435,11 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .HasForeignKey("EnderecoUsuarioModelId");
 
                     b.HasOne("TipoEnderecoUsuarioModel", "TipoEndereco")
-                        .WithMany()
+                        .WithMany("Enderecos")
                         .HasForeignKey("TipoEnderecoUsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("FK_EnderecoUsuario_TipoEnderecoUsuario_TipoEnderecoId");
 
                     b.HasOne("UsuarioModel", "Usuario")
                         .WithMany("Enderecos")
@@ -590,6 +594,11 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
             modelBuilder.Entity("TelefoneUsuarioModel", b =>
                 {
                     b.Navigation("Telefones");
+                });
+
+            modelBuilder.Entity("TipoEnderecoUsuarioModel", b =>
+                {
+                    b.Navigation("Enderecos");
                 });
 
             modelBuilder.Entity("UsuarioModel", b =>

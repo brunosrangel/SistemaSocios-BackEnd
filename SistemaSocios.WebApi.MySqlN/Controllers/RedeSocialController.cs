@@ -2,12 +2,12 @@
 
 namespace SistemaSocios.WebApi.MySql.Controllers
 {
-    public class RedeSocialControlller : BaseController<RedeSocialModel, IGenericService<RedeSocialModel>>
+    public class RedeSocialController : BaseController<RedeSocialModel, IGenericService<RedeSocialModel>>
     {
         private readonly IGenericService<RedeSocialModel> _genericService;
         private readonly ITokenService _tokenService;
         protected readonly ILogger<RedeSocialModel> _loger;
-        public RedeSocialControlller(ITokenService tokenService, ILogger<RedeSocialModel> loger,
+        public RedeSocialController(ITokenService tokenService, ILogger<RedeSocialModel> loger,
                                   IGenericService<RedeSocialModel> genericService) : base(genericService, loger, tokenService)
         {
             _genericService = genericService;

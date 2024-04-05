@@ -9,9 +9,9 @@ namespace SistemaSocios.Db.Mysql.Configuration
         {
             builder.ToTable("Entidades");
             builder.HasKey(u => u.Id);
+            builder.Property(u => u.Id).ValueGeneratedOnAdd();
             builder.Property(u => u.DescricaoEntidade);
-            builder.Property(u => u.statusEntidade);
-
+            builder.Property(u => u.status).HasDefaultValue(true);
         }
     }
 }

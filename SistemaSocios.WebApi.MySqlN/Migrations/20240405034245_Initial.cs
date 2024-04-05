@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SistemaSocios.WebApi.MySqlN.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,26 +15,13 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
-                name: "StatusMensalidadeModel",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    DescricaoStatus = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_StatusMensalidadeModel", x => x.Id);
-                })
-                .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.CreateTable(
                 name: "TipoEnderecoUsuario",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Descricao = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,7 +35,8 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Descricao = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -61,25 +49,27 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    nomeUsuario = table.Column<string>(type: "longtext", nullable: false)
+                    NomeUsuario = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    email = table.Column<string>(type: "longtext", nullable: false)
+                    Email = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    senha = table.Column<string>(type: "longtext", nullable: false)
+                    Senha = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    enderecoId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    telefoneId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    profissao = table.Column<string>(type: "longtext", nullable: false)
+                    EnderecoId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    TelefoneId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    Profissao = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    EscolaridadId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    EscolaridadeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     RedeSocialId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    dataEntrada = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    dataIniciacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    dataUltimaObrigacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataEntrada = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataIniciacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    DataUltimaObrigacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     JurosMensalidadeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     ValorMensalidadeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    MensalidadeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     EntidadeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    perfilId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    PerfilId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: false, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -98,26 +88,27 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     estado = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    TipoEnderecoUsuarioId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
-                    TipoEnderecoId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     Cep = table.Column<string>(type: "longtext", nullable: false)
-                        .Annotation("MySql:CharSet", "utf8mb4")
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    TipoEnderecoUsuarioId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UsuarioID = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_EnderecoUsuario", x => x.Id);
                     table.ForeignKey(
                         name: "FK_EnderecoUsuario_TipoEnderecoUsuario_TipoEnderecoId",
-                        column: x => x.TipoEnderecoId,
+                        column: x => x.TipoEnderecoUsuarioId,
                         principalTable: "TipoEnderecoUsuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EnderecoUsuario_Usuario_Id",
-                        column: x => x.Id,
+                        name: "FK_EnderecoUsuario_Usuario_UsuarioID",
+                        column: x => x.UsuarioID,
                         principalTable: "Usuario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -128,7 +119,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DescricaoEntidade = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    statusEntidade = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -138,7 +129,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -149,7 +140,8 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DescricaoEscolaridade = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    StatusEscolaridade = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    StatusEscolaridade = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -159,7 +151,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -171,15 +163,16 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     UsuarioID = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     MesReferencia = table.Column<int>(type: "int", nullable: false),
                     AnoReferencia = table.Column<int>(type: "int", nullable: false),
-                    StatusMensalidadeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    StatusMensalidadeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true, defaultValue: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HistoricoMensalidades", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_HistoricoMensalidades_StatusMensalidadeModel_StatusMensalida~",
-                        column: x => x.StatusMensalidadeId,
-                        principalTable: "StatusMensalidadeModel",
+                        name: "FK_HistoricoMensalidades_Usuario_Id",
+                        column: x => x.Id,
+                        principalTable: "Usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -196,9 +189,11 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UsuarioID = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     valorJuros = table.Column<int>(type: "int", nullable: false),
                     DataVigenciaJuros = table.Column<DateTime>(type: "datetime(6)", nullable: true),
-                    statusValorJuros = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    statusValorJuros = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -208,7 +203,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -219,7 +214,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DescricaoPerfil = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    StatusPerfil = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true, defaultValue: true)
                 },
                 constraints: table =>
                 {
@@ -229,7 +224,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -238,13 +233,14 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UsuarioID = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DescricaoRedeSocialUsuario = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     Descricao = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     UrlRedeSocial = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -254,7 +250,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         column: x => x.Id,
                         principalTable: "Usuario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -263,27 +259,29 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UsuarioID = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     DddTelefoneUsuario = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     NumeroTelefoneUsuario = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
-                    TipoTelefoneId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci")
+                    TipoTelefoneUsuarioId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TelefoneUsuario", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TelefoneUsuario_TipoTelefoneUsuario_TipoTelefoneId",
-                        column: x => x.TipoTelefoneId,
+                        name: "FK_TelefoneUsuario_TipoTelefoneUsuario_TipoTelefoneUsuarioId",
+                        column: x => x.TipoTelefoneUsuarioId,
                         principalTable: "TipoTelefoneUsuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TelefoneUsuario_Usuario_Id",
-                        column: x => x.Id,
+                        name: "FK_TelefoneUsuario_Usuario_TipoTelefoneUsuarioId",
+                        column: x => x.TipoTelefoneUsuarioId,
                         principalTable: "Usuario",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
 
@@ -292,16 +290,18 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UsuarioId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
                     ValorMensalidade = table.Column<decimal>(type: "decimal(65,30)", nullable: false),
                     VigenciaMensalidade = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    statusValorMensalidade = table.Column<bool>(type: "tinyint(1)", nullable: false)
+                    statusValorMensalidade = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    status = table.Column<bool>(type: "tinyint(1)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ValorMensalidade", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ValorMensalidade_Usuario_Id",
-                        column: x => x.Id,
+                        name: "FK_ValorMensalidade_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
                         principalTable: "Usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -309,14 +309,14 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EnderecoUsuario_TipoEnderecoId",
+                name: "IX_EnderecoUsuario_TipoEnderecoUsuarioId",
                 table: "EnderecoUsuario",
-                column: "TipoEnderecoId");
+                column: "TipoEnderecoUsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_HistoricoMensalidades_StatusMensalidadeId",
-                table: "HistoricoMensalidades",
-                column: "StatusMensalidadeId");
+                name: "IX_EnderecoUsuario_UsuarioID",
+                table: "EnderecoUsuario",
+                column: "UsuarioID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_HistoricoMensalidades_UsuarioID",
@@ -324,9 +324,14 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                 column: "UsuarioID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TelefoneUsuario_TipoTelefoneId",
+                name: "IX_TelefoneUsuario_TipoTelefoneUsuarioId",
                 table: "TelefoneUsuario",
-                column: "TipoTelefoneId");
+                column: "TipoTelefoneUsuarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ValorMensalidade_UsuarioId",
+                table: "ValorMensalidade",
+                column: "UsuarioId");
         }
 
         /// <inheritdoc />
@@ -361,9 +366,6 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoEnderecoUsuario");
-
-            migrationBuilder.DropTable(
-                name: "StatusMensalidadeModel");
 
             migrationBuilder.DropTable(
                 name: "TipoTelefoneUsuario");

@@ -58,8 +58,8 @@ namespace SistemaSocios.WebApi.MySql.Controllers
 
         }
 
-        [HttpGet("{id}")]
-        public virtual async Task<IActionResult> GetById(Guid id)
+        [HttpPost("GetById")]
+        public virtual async Task<IActionResult> GetById([FromBody] Guid id)
         {
             try
             {
@@ -96,7 +96,7 @@ namespace SistemaSocios.WebApi.MySql.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost("Add")]
         public virtual async Task<IActionResult> Add(TEntity entity)
         {
             try
@@ -105,7 +105,8 @@ namespace SistemaSocios.WebApi.MySql.Controllers
                 if (typeof(TEntity) == typeof(UsuarioModel))
                 {
                     var usuario = entity as UsuarioModel;
-                    usuario.senha = _tokenService.HashPassword(usuario.senha);
+                    usuario.Id = Guid.NewGuid();
+                    usuario.Senha = _tokenService.HashPassword(usuario.Senha);
                     await _service.CreateAsync(entity);
                     return Ok(new ApiResponse<object>
                     {
@@ -135,7 +136,7 @@ namespace SistemaSocios.WebApi.MySql.Controllers
                 return StatusCode(500, new ApiResponse<object>
                 {
                     Success = false,
-                    ErrorMessage = ex.Message,
+                    ErrorMessage = ex.Message + "/n" + ex.InnerException,
                     StatusCode = System.Net.HttpStatusCode.BadRequest
                 });
             }
@@ -144,8 +145,8 @@ namespace SistemaSocios.WebApi.MySql.Controllers
 
         }
 
-        [HttpPut("{id}")]
-        public virtual async Task<IActionResult> Update(Guid id, TEntity entity)
+        [HttpPut]
+        public virtual async Task<IActionResult> Update(TEntity entity)
         {
             try
             {
@@ -165,7 +166,7 @@ namespace SistemaSocios.WebApi.MySql.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
         public virtual async Task<IActionResult> Delete(Guid id)
         {
 

@@ -3,64 +3,81 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 public class UsuarioModelConfiguration : IEntityTypeConfiguration<UsuarioModel>
 {
+
     public void Configure(EntityTypeBuilder<UsuarioModel> builder)
     {
         builder.ToTable("Usuario");
         builder.HasKey(u => u.Id);
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
 
-        builder.Property(u => u.nomeUsuario).IsRequired();
-        builder.Property(u => u.email).IsRequired();
-        builder.Property(u => u.senha);
+        // Configuração do campo status
+        builder.Property(u => u.status).IsRequired().HasDefaultValue(true);
 
-        builder.HasMany(u => u.endereco)
-            .WithOne()
-            .HasForeignKey(e => e.Id);
+        // Outras propriedades e associações...
+        builder.Property(u => u.NomeUsuario).IsRequired();
+        builder.Property(u => u.Email).IsRequired();
+        builder.Property(u => u.Senha);
 
-        builder.HasMany(u => u.telefone)
-            .WithOne()
-            .HasForeignKey(t => t.Id);
+        builder.HasMany(u => u.RedesSociais)
+               .WithOne(r => r.UsuarioModel) // Supondo que RedesSociais tenha uma propriedade de navegação chamada Usuarios
+               .HasForeignKey(u => u.UsuarioID)
+               .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Property(u => u.profissao);
-        builder.HasOne(u => u.escolaridade)
-                .WithOne()
-                .HasForeignKey<EscolaridadeUsuarioModel>(p => p.Id);
+        // Relacionamento com outras entidades
+        builder.HasMany(u => u.Telefones)
+               .WithOne(t => t.Usuario)
+               .HasForeignKey(t => t.UsuarioID) // Corrigido para usar a propriedade correta
+               .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasMany(u => u.redesocial)
-            .WithOne()
-            .HasForeignKey(r => r.Id);
+        builder.HasMany(u => u.ValorMensalidades)
+               .WithOne(t => t.UsuarioModel)
+               .HasForeignKey(v => v.UsuarioID) // Corrigido para usar a propriedade correta
+               .OnDelete(DeleteBehavior.Restrict);
 
-        builder.Property(u => u.dataEntrada);
-        builder.Property(u => u.dataIniciacao);
-        builder.Property(u => u.dataUltimaObrigacao);
+        builder.HasMany(u => u.JurosMensalidades)
+              .WithOne(t => t.UsuarioModel)
+               .HasForeignKey(v => v.UsuarioID) // Corrigido para usar a propriedade correta
+               .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasMany(u => u.aplicaJurosMensalidade)
-            .WithOne()
-            .HasForeignKey(j => j.Id);
+        builder.HasMany(u => u.HistoricosMensalidades)
+               .WithOne(t => t.Usuario)
+               .HasForeignKey(v => v.UsuarioID) // Corrigido para usar a propriedade correta
+               .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasMany(u => u.Mensalidade)
-            .WithOne()
-            .HasForeignKey(m => m.Id);
-
-        builder.HasMany(u => u.entidade)
-            .WithOne()
-            .HasForeignKey(e => e.Id);
-
-        builder.HasOne(u => u.perfilAcesso)
-            .WithOne()
-            .HasForeignKey<perfilModel>(p => p.Id);
+        builder.HasMany(u => u.Enderecos)
+               .WithOne(t => t.Usuario)
+               .HasForeignKey(v => v.UsuarioID) // Corrigido para usar a propriedade correta
+               .OnDelete(DeleteBehavior.Restrict);
     }
+
+
+
+
+
 
     public void Configure(EntityTypeBuilder<EnderecoUsuarioModel> builder)
     {
         builder.ToTable("EnderecoUsuario");
-        builder.HasKey(p => p.Id);
+        builder.HasKey(e => e.Id);
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
 
-        builder.Property(p => p.cidade);
-        builder.Property(p => p.estado);
-        builder.Property(p => p.Cep);
-        builder.HasOne(p => p.TipoEndereco)
-            .WithOne()
-            .HasForeignKey<TipoEnderecoUsuarioModel>(p => p.Id);
+        builder.Property(e => e.Endereco).IsRequired();
+        builder.Property(e => e.Cidade).IsRequired();
+        builder.Property(e => e.Estado).IsRequired();
+        builder.Property(e => e.Cep).IsRequired();
+
+        builder.HasOne(e => e.TipoEndereco)
+            .WithMany()
+            .HasForeignKey(e => e.TipoEnderecoUsuarioId)
+            .IsRequired();
+
+        // Relacionamento com UsuarioModel
+        builder.HasOne(e => e.Usuario)
+            .WithMany(u => u.Enderecos) // Um usuário pode ter vários endereços
+            .HasForeignKey(e => e.UsuarioID)
+            .IsRequired();
+ 
+
     }
 
     public void Configure(EntityTypeBuilder<TelefoneUsuarioModel> builder)
@@ -68,14 +85,18 @@ public class UsuarioModelConfiguration : IEntityTypeConfiguration<UsuarioModel>
         builder.ToTable("TelefoneUsuario");
 
         builder.HasKey(t => t.Id);
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
 
         builder.Property(t => t.DddTelefoneUsuario).IsRequired();
         builder.Property(t => t.NumeroTelefoneUsuario).IsRequired();
 
         builder.HasOne(t => t.TipoTelefone)
                .WithMany()
-               .HasForeignKey(t => t.Id)
+               .HasForeignKey(t => t.TipoTelefoneUsuarioId)
                .OnDelete(DeleteBehavior.Restrict);
+ 
+
+
     }
 
     public void Configure(EntityTypeBuilder<EscolaridadeUsuarioModel> builder)
@@ -83,9 +104,11 @@ public class UsuarioModelConfiguration : IEntityTypeConfiguration<UsuarioModel>
         builder.ToTable("EscolaridadeUsuario");
 
         builder.HasKey(e => e.Id);
-
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
         builder.Property(e => e.DescricaoEscolaridade).IsRequired();
-        builder.Property(e => e.StatusEscolaridade).IsRequired();
+ 
+
+
     }
 
     public void Configure(EntityTypeBuilder<RedeSocialModel> builder)
@@ -93,11 +116,13 @@ public class UsuarioModelConfiguration : IEntityTypeConfiguration<UsuarioModel>
         builder.ToTable("RedeSocial");
 
         builder.HasKey(r => r.Id);
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
 
         builder.Property(r => r.DescricaoRedeSocialUsuario).IsRequired();
         builder.Property(r => r.Descricao).IsRequired();
         builder.Property(r => r.UrlRedeSocial).IsRequired();
-        builder.Property(r => r.IsActive).IsRequired();
+ 
+
     }
 
     public void Configure(EntityTypeBuilder<JurosMensalidadeModel> builder)
@@ -105,10 +130,13 @@ public class UsuarioModelConfiguration : IEntityTypeConfiguration<UsuarioModel>
         builder.ToTable("JurosMensalidade");
 
         builder.HasKey(j => j.Id);
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
 
         builder.Property(j => j.valorJuros).IsRequired();
         builder.Property(j => j.DataVigenciaJuros);
         builder.Property(j => j.statusValorJuros).IsRequired();
+        builder.Property(u => u.status).HasDefaultValue(true);
+
     }
 
     public void Configure(EntityTypeBuilder<ValorMensalidadeModel> builder)
@@ -116,9 +144,11 @@ public class UsuarioModelConfiguration : IEntityTypeConfiguration<UsuarioModel>
         builder.ToTable("ValorMensalidade");
 
         builder.HasKey(v => v.Id);
-
+        builder.Property(u => u.Id).ValueGeneratedOnAdd();
         builder.Property(v => v.ValorMensalidade).IsRequired();
         builder.Property(v => v.VigenciaMensalidade).IsRequired();
         builder.Property(v => v.statusValorMensalidade).IsRequired();
+        builder.Property(u => u.status).HasDefaultValue(true);
+
     }
 }

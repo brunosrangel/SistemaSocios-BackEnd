@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace SistemaSocios.WebApi.MySqlN.Migrations
 {
     [DbContext(typeof(DbMySqlContext))]
-    [Migration("20240403181213_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240405132239_xis003")]
+    partial class xis003
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,16 +24,17 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
             modelBuilder.Entity("EnderecoUsuarioModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Cep")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("TipoEnderecoId")
+                    b.Property<Guid>("TipoEnderecoUsuarioId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("TipoEnderecoUsuarioId")
+                    b.Property<Guid>("UsuarioID")
                         .HasColumnType("char(36)");
 
                     b.Property<string>("cidade")
@@ -48,9 +49,14 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool?>("status")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("TipoEnderecoId");
+                    b.HasIndex("TipoEnderecoUsuarioId");
+
+                    b.HasIndex("UsuarioID");
 
                     b.ToTable("EnderecoUsuario");
                 });
@@ -58,14 +64,17 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
             modelBuilder.Entity("EntidadeModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("DescricaoEntidade")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("statusEntidade")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<bool?>("status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -75,13 +84,14 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
             modelBuilder.Entity("EscolaridadeUsuarioModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("DescricaoEscolaridade")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("StatusEscolaridade")
+                    b.Property<bool?>("status")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
@@ -107,9 +117,12 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     b.Property<Guid>("UsuarioID")
                         .HasColumnType("char(36)");
 
-                    b.HasKey("Id");
+                    b.Property<bool?>("status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true);
 
-                    b.HasIndex("StatusMensalidadeId");
+                    b.HasKey("Id");
 
                     b.HasIndex("UsuarioID");
 
@@ -119,10 +132,17 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
             modelBuilder.Entity("JurosMensalidadeModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime?>("DataVigenciaJuros")
                         .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("UsuarioID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool?>("status")
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("statusValorJuros")
                         .HasColumnType("tinyint(1)");
@@ -138,6 +158,7 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
             modelBuilder.Entity("RedeSocialModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("Descricao")
@@ -148,36 +169,25 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("tinyint(1)");
-
                     b.Property<string>("UrlRedeSocial")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<Guid>("UsuarioID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool?>("status")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
                     b.ToTable("RedeSocial");
                 });
 
-            modelBuilder.Entity("StatusMensalidadeModel", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("DescricaoStatus")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("StatusMensalidadeModel");
-                });
-
             modelBuilder.Entity("TelefoneUsuarioModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("DddTelefoneUsuario")
@@ -188,12 +198,18 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<Guid>("TipoTelefoneId")
+                    b.Property<Guid>("TipoTelefoneUsuarioId")
                         .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UsuarioID")
+                        .HasColumnType("char(36)");
+
+                    b.Property<bool?>("status")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TipoTelefoneId");
+                    b.HasIndex("TipoTelefoneUsuarioId");
 
                     b.ToTable("TelefoneUsuario");
                 });
@@ -207,6 +223,9 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     b.Property<string>("Descricao")
                         .IsRequired()
                         .HasColumnType("longtext");
+
+                    b.Property<bool?>("status")
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
@@ -223,6 +242,9 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<bool?>("status")
+                        .HasColumnType("tinyint(1)");
+
                     b.HasKey("Id");
 
                     b.ToTable("TipoTelefoneUsuario");
@@ -234,54 +256,63 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
+                    b.Property<DateTime>("DataEntrada")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataIniciacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("DataUltimaObrigacao")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("EnderecoId")
+                        .HasColumnType("char(36)");
+
                     b.Property<Guid>("EntidadeId")
                         .HasColumnType("char(36)");
 
-                    b.Property<Guid>("EscolaridadId")
+                    b.Property<Guid>("EscolaridadeId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("JurosMensalidadeId")
                         .HasColumnType("char(36)");
 
+                    b.Property<Guid>("MensalidadeId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("NomeUsuario")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("PerfilId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Profissao")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
                     b.Property<Guid>("RedeSocialId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<string>("Senha")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<Guid>("TelefoneId")
                         .HasColumnType("char(36)");
 
                     b.Property<Guid>("ValorMensalidadeId")
                         .HasColumnType("char(36)");
 
-                    b.Property<DateTime>("dataEntrada")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("dataIniciacao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<DateTime>("dataUltimaObrigacao")
-                        .HasColumnType("datetime(6)");
-
-                    b.Property<string>("email")
+                    b.Property<bool?>("status")
                         .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("enderecoId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("nomeUsuario")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("perfilId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<string>("profissao")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<string>("senha")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
-                    b.Property<Guid>("telefoneId")
-                        .HasColumnType("char(36)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -291,6 +322,10 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
             modelBuilder.Entity("ValorMensalidadeModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UsuarioId")
                         .HasColumnType("char(36)");
 
                     b.Property<decimal>("ValorMensalidade")
@@ -299,10 +334,15 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
                     b.Property<DateTime>("VigenciaMensalidade")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<bool?>("status")
+                        .HasColumnType("tinyint(1)");
+
                     b.Property<bool>("statusValorMensalidade")
                         .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
 
                     b.ToTable("ValorMensalidade");
                 });
@@ -310,14 +350,17 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
             modelBuilder.Entity("perfilModel", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
 
                     b.Property<string>("DescricaoPerfil")
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<bool>("StatusPerfil")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<bool?>("status")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("tinyint(1)")
+                        .HasDefaultValue(true);
 
                     b.HasKey("Id");
 
@@ -326,34 +369,37 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
             modelBuilder.Entity("EnderecoUsuarioModel", b =>
                 {
-                    b.HasOne("UsuarioModel", null)
-                        .WithMany("endereco")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("TipoEnderecoUsuarioModel", "TipoEndereco")
-                        .WithMany()
-                        .HasForeignKey("TipoEnderecoId")
+                        .WithMany("Enderecos")
+                        .HasForeignKey("TipoEnderecoUsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_EnderecoUsuario_TipoEnderecoUsuario_TipoEnderecoId");
+
+                    b.HasOne("UsuarioModel", "Usuario")
+                        .WithMany("Enderecos")
+                        .HasForeignKey("UsuarioID")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TipoEndereco");
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("EntidadeModel", b =>
                 {
                     b.HasOne("UsuarioModel", null)
-                        .WithMany("entidade")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .WithOne("Entidade")
+                        .HasForeignKey("EntidadeModel", "Id")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("EscolaridadeUsuarioModel", b =>
                 {
                     b.HasOne("UsuarioModel", null)
-                        .WithOne("escolaridade")
+                        .WithOne("Escolaridade")
                         .HasForeignKey("EscolaridadeUsuarioModel", "Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -361,53 +407,49 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
             modelBuilder.Entity("HistoricoMensalidadesModel", b =>
                 {
-                    b.HasOne("StatusMensalidadeModel", "statusMensalidade")
-                        .WithMany()
-                        .HasForeignKey("StatusMensalidadeId")
+                    b.HasOne("UsuarioModel", null)
+                        .WithMany("HistoricoMensalidades")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("UsuarioModel", "Usuario")
+                    b.HasOne("UsuarioModel", null)
                         .WithMany()
                         .HasForeignKey("UsuarioID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Usuario");
-
-                    b.Navigation("statusMensalidade");
                 });
 
             modelBuilder.Entity("JurosMensalidadeModel", b =>
                 {
                     b.HasOne("UsuarioModel", null)
-                        .WithMany("aplicaJurosMensalidade")
+                        .WithMany("AplicaJurosMensalidade")
                         .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("RedeSocialModel", b =>
                 {
                     b.HasOne("UsuarioModel", null)
-                        .WithMany("redesocial")
+                        .WithMany("RedesSociais")
                         .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
             modelBuilder.Entity("TelefoneUsuarioModel", b =>
                 {
-                    b.HasOne("UsuarioModel", null)
-                        .WithMany("telefone")
-                        .HasForeignKey("Id")
+                    b.HasOne("TipoTelefoneUsuarioModel", "TipoTelefone")
+                        .WithMany()
+                        .HasForeignKey("TipoTelefoneUsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TipoTelefoneUsuarioModel", "TipoTelefone")
-                        .WithMany()
-                        .HasForeignKey("TipoTelefoneId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("UsuarioModel", null)
+                        .WithMany("Telefones")
+                        .HasForeignKey("TipoTelefoneUsuarioId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("TipoTelefone");
@@ -415,41 +457,51 @@ namespace SistemaSocios.WebApi.MySqlN.Migrations
 
             modelBuilder.Entity("ValorMensalidadeModel", b =>
                 {
-                    b.HasOne("UsuarioModel", null)
-                        .WithMany("Mensalidade")
-                        .HasForeignKey("Id")
+                    b.HasOne("UsuarioModel", "Usuario")
+                        .WithMany("ValorMensalidades")
+                        .HasForeignKey("UsuarioId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Usuario");
                 });
 
             modelBuilder.Entity("perfilModel", b =>
                 {
                     b.HasOne("UsuarioModel", null)
-                        .WithOne("perfilAcesso")
+                        .WithOne("PerfilAcesso")
                         .HasForeignKey("perfilModel", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("TipoEnderecoUsuarioModel", b =>
+                {
+                    b.Navigation("Enderecos");
                 });
 
             modelBuilder.Entity("UsuarioModel", b =>
                 {
-                    b.Navigation("Mensalidade");
+                    b.Navigation("AplicaJurosMensalidade");
 
-                    b.Navigation("aplicaJurosMensalidade");
+                    b.Navigation("Enderecos");
 
-                    b.Navigation("endereco");
-
-                    b.Navigation("entidade");
-
-                    b.Navigation("escolaridade")
+                    b.Navigation("Entidade")
                         .IsRequired();
 
-                    b.Navigation("perfilAcesso")
+                    b.Navigation("Escolaridade")
                         .IsRequired();
 
-                    b.Navigation("redesocial");
+                    b.Navigation("HistoricoMensalidades");
 
-                    b.Navigation("telefone");
+                    b.Navigation("PerfilAcesso")
+                        .IsRequired();
+
+                    b.Navigation("RedesSociais");
+
+                    b.Navigation("Telefones");
+
+                    b.Navigation("ValorMensalidades");
                 });
 #pragma warning restore 612, 618
         }
