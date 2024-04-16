@@ -15,7 +15,7 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.17" />
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
     <PackageReference Include="Xis.Generic.DataAccess" Version="1.0.0" />
-    <PackageReference Include="Xis.ValidaToken" Version="1.0.0" />
+    <PackageReference Include="Xis.ValidaToken" Version="1.0.1" />
   </ItemGroup>
 
 </Project>
